@@ -3,6 +3,8 @@
 
 #define goalGrabber_port 'A'
 
+bool pistonStat = false; //yes
+
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
@@ -124,9 +126,6 @@ void opcontrol() {
   pros::ADIDigitalOut piston (goalGrabber_port);
   chassis.drive_brake_set(driver_preference_brake);
   while (true) {
-    piston.set_value(true);
-    pros::delay(500);
-    piston.set_value(false);
     // PID Tuner
     // After you find values that you're happy with, you'll have to set them in auton.cpp
     if (!pros::competition::is_connected()) {
@@ -142,11 +141,12 @@ void opcontrol() {
         autonomous();
         chassis.drive_brake_set(driver_preference_brake);
       }
-      /*if (master.get_digital(DIGITAL_Y)){
-        if(piston.get_value() == false)
+      if (master.get_digital(DIGITAL_Y)){
+        if(pistonStat == false)
           piston.set_value(true);
         else piston.set_value(false);
-      }*/
+        pistonStat = !pistonStat;
+      }
 
       chassis.pid_tuner_iterate();  // Allow PID Tuner to iterate
     }
