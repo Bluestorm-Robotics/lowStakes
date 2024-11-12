@@ -26,9 +26,10 @@ ez::Drive chassis(
 void initialize() {
   // Print our branding over your terminal :D
   ez::ez_template_print();
-
+  pros::ADIDigitalOut piston (goalGrabber_port);
 
   pros::delay(500);  // Stop the user from doing anything while legacy ports configure
+
 
   // Configure your chassis controls
   chassis.opcontrol_curve_buttons_toggle(true);  // Enables modifying the controller curve with buttons on the joysticks
@@ -58,6 +59,8 @@ void initialize() {
   chassis.initialize();
   ez::as::initialize();
   master.rumble(".");
+
+
 }
 
 /**
@@ -118,10 +121,12 @@ void autonomous() {
 void opcontrol() {
   // This is preference to what you like to drive on
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_HOLD;
-
+  pros::ADIDigitalOut piston (goalGrabber_port);
   chassis.drive_brake_set(driver_preference_brake);
-
   while (true) {
+    piston.set_value(true);
+    pros::delay(500);
+    piston.set_value(false);
     // PID Tuner
     // After you find values that you're happy with, you'll have to set them in auton.cpp
     if (!pros::competition::is_connected()) {
@@ -137,18 +142,18 @@ void opcontrol() {
         autonomous();
         chassis.drive_brake_set(driver_preference_brake);
       }
-      if (master.get_digital(DIGITAL_Y)){
-        if(piston.set_value == false)
+      /*if (master.get_digital(DIGITAL_Y)){
+        if(piston.get_value() == false)
           piston.set_value(true);
         else piston.set_value(false);
-      }
+      }*/
 
       chassis.pid_tuner_iterate();  // Allow PID Tuner to iterate
     }
 
     //chassis.opcontrol_tank();  // Tank control
-     chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
-    // chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
+     //chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
+     chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
     // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
 
