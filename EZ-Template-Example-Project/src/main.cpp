@@ -1,4 +1,7 @@
 #include "main.h"
+	
+
+#define goalGrabber_port 'A'
 
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
@@ -9,12 +12,11 @@
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
     {11, 12, 3},     // Left Chassis Ports (negative port will reverse it!)
-    {-2, -19, -5},  // Right Chassis Ports (negative port will reverse it!)
+    {-2, -19, -6},  // Right Chassis Ports (negative port will reverse it!)
 
-    7,      // IMU Port
+    5,      // IMU Port
     3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     600);   // Wheel RPM
-
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -24,6 +26,7 @@ ez::Drive chassis(
 void initialize() {
   // Print our branding over your terminal :D
   ez::ez_template_print();
+
 
   pros::delay(500);  // Stop the user from doing anything while legacy ports configure
 
@@ -114,7 +117,7 @@ void autonomous() {
  */
 void opcontrol() {
   // This is preference to what you like to drive on
-  pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_COAST;
+  pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_HOLD;
 
   chassis.drive_brake_set(driver_preference_brake);
 
@@ -133,6 +136,11 @@ void opcontrol() {
       if (master.get_digital(DIGITAL_B) && master.get_digital(DIGITAL_DOWN)) {
         autonomous();
         chassis.drive_brake_set(driver_preference_brake);
+      }
+      if (master.get_digital(DIGITAL_Y)){
+        if(piston.set_value == false)
+          piston.set_value(true);
+        else piston.set_value(false);
       }
 
       chassis.pid_tuner_iterate();  // Allow PID Tuner to iterate
