@@ -1,7 +1,6 @@
 #include "main.h"
 	
 
-#define goalGrabber_port 'A'
 
 bool pistonStat = false; //yes
 
@@ -14,7 +13,7 @@ bool pistonStat = false; //yes
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
     {11, 12, 3},     // Left Chassis Ports (negative port will reverse it!)
-    {-2, -19, -6},  // Right Chassis Ports (negative port will reverse it!)
+    {-2, -19, -1},  // Right Chassis Ports (negative port will reverse it!)
 
     5,      // IMU Port
     3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -28,7 +27,6 @@ ez::Drive chassis(
 void initialize() {
   // Print our branding over your terminal :D
   ez::ez_template_print();
-  pros::ADIDigitalOut piston (goalGrabber_port);
 
   pros::delay(500);  // Stop the user from doing anything while legacy ports configure
 
@@ -123,7 +121,6 @@ void autonomous() {
 void opcontrol() {
   // This is preference to what you like to drive on
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_HOLD;
-  pros::ADIDigitalOut piston (goalGrabber_port);
   chassis.drive_brake_set(driver_preference_brake);
   while (true) {
     // PID Tuner
@@ -141,13 +138,6 @@ void opcontrol() {
         autonomous();
         chassis.drive_brake_set(driver_preference_brake);
       }
-      if (master.get_digital(DIGITAL_Y)){
-        if(pistonStat == false)
-          piston.set_value(true);
-        else piston.set_value(false);
-        pistonStat = !pistonStat;
-      }
-
       chassis.pid_tuner_iterate();  // Allow PID Tuner to iterate
     }
 
@@ -160,6 +150,22 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
+      if (master.get_digital(DIGITAL_Y)){
+        if(pistonStat == false){
+          piston.set_value(true);
+          pistonStat = !pistonStat;
+        }
+        else if(pistonStat == true){
+          piston.set_value(false);
+          pistonStat = !pistonStat;
+        }
+      }
+      if (master.get_digital(DIGITAL_X)){
+        intake.move(-40);
+      }
+      else{
+        intake.move(0);
+      }
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
