@@ -12,8 +12,8 @@ bool pistonStat = false; //yes
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {11, 12, 3},     // Left Chassis Ports (negative port will reverse it!)
-    {-2, -19, -1},  // Right Chassis Ports (negative port will reverse it!)
+    {-11, -12, -3},     // Left Chassis Ports (negative port will reverse it!)
+    {2, 19, 1},  // Right Chassis Ports (negative port will reverse it!)
 
     5,      // IMU Port
     3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -150,7 +150,7 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
-      if (master.get_digital(DIGITAL_Y)){
+      /*if (master.get_digital(DIGITAL_Y)){
         if(pistonStat == false){
           piston.set_value(true);
           pistonStat = !pistonStat;
@@ -159,9 +159,15 @@ void opcontrol() {
           piston.set_value(false);
           pistonStat = !pistonStat;
         }
+      }*/
+      if(master.get_digital(DIGITAL_R1)){
+        piston.set_value(true);
+      }
+      else if( master.get_digital(DIGITAL_R2)){
+        piston.set_value(false);
       }
       if (master.get_digital(DIGITAL_X)){
-        intake.move(-40);
+        intake.move(-127);
       }
       else{
         intake.move(0);
