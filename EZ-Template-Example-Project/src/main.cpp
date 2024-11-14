@@ -38,6 +38,7 @@ void initialize() {
 
   // Set the drive to your own constants from autons.cpp!
   default_constants();
+  piston.set_value(false); //disables piston //maybe not needed4
 
   // These are already defaulted to these buttons, but you can change the left/right curve buttons here!
   // chassis.opcontrol_curve_buttons_left_set(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);  // If using tank, only the left side is used.
@@ -104,7 +105,6 @@ void autonomous() {
 
   ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
-
 /**
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -120,6 +120,7 @@ void autonomous() {
  */
 void opcontrol() {
   // This is preference to what you like to drive on
+  int count;
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_HOLD;
   chassis.drive_brake_set(driver_preference_brake);
   while (true) {
@@ -130,9 +131,8 @@ void opcontrol() {
       //  When enabled:
       //  * use A and Y to increment / decrement the constants
       //  * use the arrow keys to navigate the constants
-      if (master.get_digital_new_press(DIGITAL_X))
-        chassis.pid_tuner_toggle();
-
+      //if (master.get_digital_new_press(DIGITAL_X)) chassis.pid_tuner_toggle();
+    
       // Trigger the selected autonomous routine
       if (master.get_digital(DIGITAL_B) && master.get_digital(DIGITAL_DOWN)) {
         autonomous();
@@ -150,24 +150,28 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
-      /*if (master.get_digital(DIGITAL_Y)){
-        if(pistonStat == false){
-          piston.set_value(true);
-          pistonStat = !pistonStat;
+      if (master.get_digital(DIGITAL_Y)){
+        pistonStat = !pistonStat;
+        piston.set_value(pistonStat);
+        if(pistonStat) {
+          count++;
+          master.print(0, 0, "Pneumatics: %d", count);
         }
-        else if(pistonStat == true){
-          piston.set_value(false);
-          pistonStat = !pistonStat;
-        }
-      }*/
-      if(master.get_digital(DIGITAL_R1)){
+        pros::delay(500);
+      }
+      /*if(master.get_digital(DIGITAL_R1)){
         piston.set_value(true);
+        count++;
+        master.print(0, 0, "Pneumatics: %d", count);
       }
       else if( master.get_digital(DIGITAL_R2)){
         piston.set_value(false);
-      }
-      if (master.get_digital(DIGITAL_X)){
+      }*/
+      if (master.get_digital(DIGITAL_L1)){
         intake.move(-127);
+      }
+      else if (master.get_digital(DIGITAL_L2)){
+        intake.move(40); 
       }
       else{
         intake.move(0);
