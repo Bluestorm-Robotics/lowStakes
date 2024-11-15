@@ -421,7 +421,8 @@
       }
     },
     "upload_options": {
-      "description": "SomethingNew but with EZ template"
+      "description": "SomethingNew but with EZ template",
+      "icon": "planet"
     },
     "use_early_access": false
   }

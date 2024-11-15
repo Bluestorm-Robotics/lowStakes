@@ -46,6 +46,8 @@
 // More includes here...
 #include "autons.hpp"
 #include "subsystems.hpp"
+#include "helpers.hpp"
+
 
 
 /**
@@ -80,11 +82,27 @@ void opcontrol(void);
 }
 #endif
 
+//bool pistonStat = false; //yes
+
+/*
+void pistonTog(){
+    pistonStat = !pistonStat;
+    piston.set_value(pistonStat);
+    if(pistonStat) {
+        //count++;
+        //master.print(0, 0, "Pneumatics: %d", count);
+    }
+}*/
+
+
 #ifdef __cplusplus
 /**
  * You can add C++-only headers here
  */
 //#include <iostream>
+#include <math.h>
 #endif
+
+
 
 #endif  // _PROS_MAIN_H_

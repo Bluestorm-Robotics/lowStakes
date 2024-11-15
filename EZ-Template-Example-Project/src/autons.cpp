@@ -9,15 +9,12 @@
 /////
 
 // These are out of 127
-const int DRIVE_SPEED = 110;
-const int TURN_SPEED = 90;
-const int SWING_SPEED = 90;
 
-#define X_OFFSET .225
-#define Y_OFFSET .223
+#define X_OFFSET -0.1778
+#define Y_OFFSET -0.001
 #define X_INITIAL -1.8288
-#define Y_INITIAL -0.6096
-#define HEADING_INITIAL 90
+#define Y_INITIAL -1.2192
+#define HEADING_INITIAL 225 
 
 
 ///
@@ -232,6 +229,10 @@ void interfered_example() {
 // Make your own autonomous functions here!
 // . . .
 void gpsNav(){
+  int curHead;
   gps1.initialize_full(X_OFFSET, Y_OFFSET, X_INITIAL, Y_INITIAL, HEADING_INITIAL);
-  
+  chassis.pid_drive_set(24_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  //pistonTog();
+  turnToHead(270);
 }

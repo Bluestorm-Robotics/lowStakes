@@ -1,8 +1,4 @@
 #include "main.h"
-	
-
-
-bool pistonStat = false; //yes
 
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
@@ -26,7 +22,8 @@ ez::Drive chassis(
  */
 void initialize() {
   // Print our branding over your terminal :D
-  ez::ez_template_print();
+  //ez::ez_template_print();
+  //ez::print_to_screen("owo whats this? a cowode?");
 
   pros::delay(500);  // Stop the user from doing anything while legacy ports configure
 
@@ -151,12 +148,7 @@ void opcontrol() {
     // Put more user control code here!
     // . . .
       if (master.get_digital(DIGITAL_Y)){
-        pistonStat = !pistonStat;
-        piston.set_value(pistonStat);
-        if(pistonStat) {
-          count++;
-          master.print(0, 0, "Pneumatics: %d", count);
-        }
+        
         pros::delay(500);
       }
       /*if(master.get_digital(DIGITAL_R1)){
