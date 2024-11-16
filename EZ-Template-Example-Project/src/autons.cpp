@@ -1,4 +1,5 @@
 #include "main.h"
+#include "helpers.hpp"
 
 
 
@@ -233,6 +234,6 @@ void gpsNav(){
   gps1.initialize_full(X_OFFSET, Y_OFFSET, X_INITIAL, Y_INITIAL, HEADING_INITIAL);
   chassis.pid_drive_set(24_in, DRIVE_SPEED, true);
   chassis.pid_wait();
-  //pistonTog();
+  pistonTog();
   turnToHead(270);
 }
