@@ -1,4 +1,8 @@
 #include "main.h"
+//#include "helpers.hpp"
+
+int pistonCount = 0; // Counts piston uses
+bool pistonStat = false; //Tracks if piston is enabled
 
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
@@ -117,7 +121,6 @@ void autonomous() {
  */
 void opcontrol() {
   // This is preference to what you like to drive on
-  int count;
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_HOLD;
   chassis.drive_brake_set(driver_preference_brake);
   while (true) {
@@ -148,25 +151,22 @@ void opcontrol() {
     // Put more user control code here!
     // . . .
       if (master.get_digital(DIGITAL_Y)){
-        
+        pistonStat = !pistonStat; //Toggle switch
+        piston.set_value(pistonStat);
         pros::delay(500);
       }
-      /*if(master.get_digital(DIGITAL_R1)){
-        piston.set_value(true);
-        count++;
-        master.print(0, 0, "Pneumatics: %d", count);
-      }
-      else if( master.get_digital(DIGITAL_R2)){
-        piston.set_value(false);
-      }*/
+
       if (master.get_digital(DIGITAL_L1)){
-        intake.move(-127);
+        elevator.move(-127);
       }
       else if (master.get_digital(DIGITAL_L2)){
-        intake.move(40); 
+        elevator.move(40); 
+      }
+      else if (master.get_digital(DIGITAL_R1)){
+        intake.move(127);
       }
       else{
-        intake.move(0);
+        intakeGroup.move(0);
       }
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME

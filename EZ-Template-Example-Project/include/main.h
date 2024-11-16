@@ -87,7 +87,7 @@ void opcontrol(void);
  * You can add C++-only headers here
  */
 //#include <iostream>
-#include <math.h>
+#include "math.h"
 #endif
 
 
