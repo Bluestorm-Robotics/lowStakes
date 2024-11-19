@@ -1,8 +1,8 @@
 #include "main.h"
-//#include "helpers.hpp"
+#include "helpers.hpp"
 
-int pistonCount = 0; // Counts piston uses
-bool pistonStat = false; //Tracks if piston is enabled
+//int pistonCount = 0; // Counts piston uses
+//bool pistonStat = false; //Tracks if piston is enabled
 
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
@@ -13,9 +13,9 @@ bool pistonStat = false; //Tracks if piston is enabled
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
     {-11, -12, -3},     // Left Chassis Ports (negative port will reverse it!)
-    {2, 19, 1},  // Right Chassis Ports (negative port will reverse it!)
+    {1, 2, 3},  // Right Chassis Ports (negative port will reverse it!)
 
-    5,      // IMU Port
+    7,      // IMU Port
     3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     600);   // Wheel RPM
 /**
@@ -152,7 +152,7 @@ void opcontrol() {
     // . . .
       if (master.get_digital(DIGITAL_Y)){
         pistonStat = !pistonStat; //Toggle switch
-        piston.set_value(pistonStat);
+        //piston.set_value(pistonStat);
         pros::delay(500);
       }
 
