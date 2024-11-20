@@ -1,3 +1,5 @@
+#pragma once
+
 #include "api.h"
 
 int pistonCount = 0; // Counts piston uses

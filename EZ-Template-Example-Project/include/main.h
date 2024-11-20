@@ -46,7 +46,7 @@
 // More includes here...
 #include "autons.hpp"
 #include "subsystems.hpp"
-//#include "helpers.hpp"
+#include "helpers.hpp"
 
 
 
@@ -88,7 +88,7 @@ void opcontrol(void);
  * You can add C++-only headers here
  */
 //#include <iostream>
-#include "math.h"
+//#include "math.h"
 #endif
 
 
