@@ -233,11 +233,16 @@ void interfered_example() {
 // . . .
 // Make your own autonomous functions here!
 // . . .
+
+// Gps Navigation plus inertial
+// Our own autonomouse
 void gpsNav(){
   int curHead;
+  pistonTog();
   gps1.initialize_full(X_OFFSET, Y_OFFSET, X_INITIAL, Y_INITIAL, HEADING_INITIAL);
-  chassis.pid_drive_set(24_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(-24_in, DRIVE_SPEED, true);
   chassis.pid_wait();
+  pros::delay(100);
   pistonTog();
   turnToHead(270);
 }

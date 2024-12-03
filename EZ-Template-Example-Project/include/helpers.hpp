@@ -6,7 +6,7 @@ inline int pistonCount = 0; // Counts piston uses
 inline bool pistonStat = false; //Tracks if piston is enabled
 
 //Constants
-inline const int DRIVE_SPEED = 110;
+inline const int DRIVE_SPEED = 80;
 inline const int TURN_SPEED = 90;
 inline const int SWING_SPEED = 90;
 

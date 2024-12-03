@@ -39,7 +39,7 @@ void initialize() {
 
   // Set the drive to your own constants from autons.cpp!
   default_constants();
-  piston.set_value(false); //disables piston //maybe not needed4
+  //piston.set_value(false); //disables piston //maybe not needed4
 
   // These are already defaulted to these buttons, but you can change the left/right curve buttons here!
   // chassis.opcontrol_curve_buttons_left_set(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);  // If using tank, only the left side is used.
@@ -47,6 +47,7 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
+      Auton("GPS Navigation\n Blue right corner", gpsNav),
       Auton("Example Drive\n\nDrive forward and come back.", drive_example),
       Auton("Example Turn\n\nTurn 3 times.", turn_example),
       Auton("Drive and Turn\n\nDrive forward, turn, come back. ", drive_and_turn),
@@ -150,6 +151,7 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
+
 
       if (master.get_digital(DIGITAL_Y)){
         pistonTog();
