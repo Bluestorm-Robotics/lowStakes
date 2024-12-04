@@ -33,7 +33,7 @@ void initialize() {
 
 
   // Configure your chassis controls
-  chassis.opcontrol_curve_buttons_toggle(true);  // Enables modifying the controller curve with buttons on the joysticks
+  chassis.opcontrol_curve_buttons_toggle(false);  // Enables modifying the controller curve with buttons on the joysticks
   chassis.opcontrol_drive_activebrake_set(0);    // Sets the active brake kP. We recommend ~2.  0 will disable.
   chassis.opcontrol_curve_default_set(0, 0);     // Defaults for curve. If using tank, only the first parameter is used. (Comment this line out if you have an SD card!)
 
@@ -62,6 +62,8 @@ void initialize() {
   chassis.initialize();
   ez::as::initialize();
   master.rumble(".");
+
+  gps1.set_data_rate(5);
 
 
 }
@@ -151,6 +153,8 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
+      elevatorRPM = elevator.get_actual_velocity();
+      master.print(0,0, "RPM: %d", elevatorRPM);
 
 
       if (master.get_digital(DIGITAL_Y)){
@@ -161,13 +165,11 @@ void opcontrol() {
       }
 
       if (master.get_digital(DIGITAL_L1)){
-        elevator.move(-127);
+        intakeGroup.move(127);
       }
       else if (master.get_digital(DIGITAL_L2)){
-        elevator.move(40); 
-      }
-      else if (master.get_digital(DIGITAL_R1)){
-        intake.move(127);
+        intake.move(0);
+        elevator.move(-127); 
       }
       else{
         intakeGroup.move(0);
