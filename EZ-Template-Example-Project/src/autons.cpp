@@ -13,9 +13,9 @@
 
 #define X_OFFSET -0.1778
 #define Y_OFFSET -0.001
-#define X_INITIAL -1.8288
-#define Y_INITIAL -1.2192
-#define HEADING_INITIAL 225 
+#define X_INITIAL -1.366
+#define Y_INITIAL 0.69
+#define HEADING_INITIAL 283 
 
 /*const int DRIVE_SPEED = 110;
 const int TURN_SPEED = 90;
@@ -237,15 +237,18 @@ void interfered_example() {
 // Gps Navigation plus inertial
 // Our own autonomouse
 void gpsNav(){
+  pros::Task HeadUpdate(headUpdate);
   int curHead;
   pistonTog();
   gps1.initialize_full(X_OFFSET, Y_OFFSET, X_INITIAL, Y_INITIAL, HEADING_INITIAL);
-  chassis.pid_drive_set(-26_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(-29_in, DRIVE_SPEED, true);
   chassis.pid_wait();
   pros::delay(100);
   pistonTog();
-  turnToHead(230);
-  chassis.pid_drive_set(24_in, DRIVE_SPEED, true);
+  //turnToHead(360);
+  chassis.pid_turn_set(345_deg, TURN_SPEED);
   chassis.pid_wait();
-  load(true);
+  chassis.pid_drive_set(18_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  //load(true);
 }

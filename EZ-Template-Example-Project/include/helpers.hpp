@@ -5,8 +5,8 @@
 
 //Constants
 inline const int DRIVE_SPEED = 40;
-inline const int TURN_SPEED = 90;
-inline const int SWING_SPEED = 90;
+inline const int TURN_SPEED = 40;
+inline const int SWING_SPEED = 40;
 inline const int elevatorRPMFlag = 100; //Threashold for detecting elevator jam
 
 
@@ -17,9 +17,9 @@ inline int elevatorRPM;
 
 
 
-inline void turnToHead(double deg){ //deg is requested heading
-    double current = gps1.get_heading(); //Current heading
-    double turn = abs(current - deg); // Absoloute value of degrees to turn
+inline void turnToHead(float deg){ //deg is requested heading
+    float current = gps1.get_heading(); //Current heading
+    float turn = abs(current - deg); // Absoloute value of degrees to turn
     if(current > deg){ //If requested heading is less than current heading turn left
         chassis.pid_turn_set(-turn, TURN_SPEED, true);
     }
@@ -47,7 +47,7 @@ inline void load(bool enabled){
         while(enabled){
             elevatorRPM = elevator.get_actual_velocity();
             if(elevatorRPM < elevatorRPMFlag){  
-                master.print(0,0, "RPM: %d", elevatorRPM);
+                //master.print(0,0, "RPM: %d", elevatorRPM);
                 elevator.move(-127); //Move in reverse
                 intake.move(0);
                 pros::delay(1000);
@@ -59,4 +59,27 @@ inline void load(bool enabled){
         }
     }
     else intakeGroup.move(0);
+}
+
+inline void headUpdate(){
+    while(true){
+        master.print(0,0, "heading: %f", gps1.get_heading());
+        pros::delay(500);
+    }
+}
+
+
+inline void turnToIMU(float deg){ //deg is requested heading
+    float current = chassis.drive_imu_get(); //Current heading
+    float turn = abs(current - deg); // Absoloute value of degrees to turn
+    if(current > deg){ //If requested heading is less than current heading turn left
+        chassis.pid_turn_set(-turn, TURN_SPEED, true);
+    }
+    else{ // If requested heading is MORE than current heading turn right
+        chassis.pid_turn_set(-turn, TURN_SPEED, true);
+    }
+    //chassis.pid_turn_set(deg - current, TURN_SPEED, true);
+    /*if (gps1.get_heading() < deg){ //Verification check (not yet implemented)
+    
+    }*/
 }

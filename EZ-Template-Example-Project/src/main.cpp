@@ -63,8 +63,7 @@ void initialize() {
   ez::as::initialize();
   master.rumble(".");
 
-  gps1.set_data_rate(5);
-
+  gps1.set_data_rate(10);
 
 }
 
@@ -106,6 +105,7 @@ void autonomous() {
   chassis.drive_imu_reset();                  // Reset gyro position to 0
   chassis.drive_sensor_reset();               // Reset drive sensors to 0
   chassis.drive_brake_set(MOTOR_BRAKE_HOLD);  // Set motors to hold.  This helps autonomous consistency
+  chassis.drive_angle_set(283); //Tells IMU what its heading is
 
   ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
