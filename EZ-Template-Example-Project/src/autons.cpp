@@ -245,10 +245,9 @@ void gpsNav(){
   chassis.pid_wait();
   pros::delay(100);
   pistonTog();
-  //turnToHead(360);
   chassis.pid_turn_set(345_deg, TURN_SPEED);
   chassis.pid_wait();
+  pros::Task Load(load);
   chassis.pid_drive_set(18_in, DRIVE_SPEED, true);
   chassis.pid_wait();
-  //load(true);
 }

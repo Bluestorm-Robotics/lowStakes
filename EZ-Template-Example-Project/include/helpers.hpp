@@ -17,7 +17,7 @@ inline int elevatorRPM;
 
 
 
-inline void turnToHead(float deg){ //deg is requested heading
+inline void turnToHead(float deg){ //deg is requested heading (DEPRICATED FUNCTION)
     float current = gps1.get_heading(); //Current heading
     float turn = abs(current - deg); // Absoloute value of degrees to turn
     if(current > deg){ //If requested heading is less than current heading turn left
@@ -40,7 +40,7 @@ inline void pistonTog(){ //Toggles piston
         master.print(0, 0, "Pneumatics: %d", count); // print to controller screen (Cant call master in helpers)
     }*/
 }
-inline void load(bool enabled){
+/*inline void load(bool enabled){
     if (enabled){
         intakeGroup.move(127);
         pros::delay(1000);
@@ -59,6 +59,24 @@ inline void load(bool enabled){
         }
     }
     else intakeGroup.move(0);
+}*/
+
+inline void load(){
+    intakeGroup.move(127);
+    pros::delay(1000);
+    while(true){
+        elevatorRPM = elevator.get_actual_velocity();
+        if(elevatorRPM < elevatorRPMFlag){  
+            //master.print(0,0, "RPM: %d", elevatorRPM);
+            elevator.move(-127); //Move in reverse
+            intake.move(0);
+            pros::delay(1000);
+            intakeGroup.move(127);
+            pros::delay(500);
+        }
+        else intakeGroup.move(127);
+        pros::delay(500);
+    }
 }
 
 inline void headUpdate(){
