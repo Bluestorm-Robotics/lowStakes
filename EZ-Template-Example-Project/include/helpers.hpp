@@ -14,6 +14,7 @@ inline const int elevatorRPMFlag = 100; //Threashold for detecting elevator jam
 inline int pistonCount = 0; // Counts piston uses
 inline bool pistonStat = false; //Tracks if piston is enabled
 inline int elevatorRPM;
+inline bool intakeTog = false;
 
 
 

@@ -239,7 +239,7 @@ void interfered_example() {
 void gpsNav(){
   pros::Task HeadUpdate(headUpdate);
   int curHead;
-  pistonTog();
+  //pistonTog();
   gps1.initialize_full(X_OFFSET, Y_OFFSET, X_INITIAL, Y_INITIAL, HEADING_INITIAL);
   chassis.pid_drive_set(-29_in, DRIVE_SPEED, true);
   chassis.pid_wait();
@@ -248,6 +248,11 @@ void gpsNav(){
   chassis.pid_turn_set(345_deg, TURN_SPEED);
   chassis.pid_wait();
   pros::Task Load(load);
-  chassis.pid_drive_set(18_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(14_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  pros::delay(4000);
+  chassis.pid_turn_set(80_deg, TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(12_in, DRIVE_SPEED, true);
   chassis.pid_wait();
 }
