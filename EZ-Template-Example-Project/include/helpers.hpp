@@ -35,7 +35,13 @@ inline void turnToHead(float deg){ //deg is requested heading (DEPRICATED FUNCTI
 
 inline void pistonTog(){ //Toggles piston
     pistonStat = !pistonStat; //Toggle switch
-    piston.set_value(pistonStat);
+    if(pistonStat){
+        piston.move(127);
+    }
+    else{
+        piston.move(0);
+    }
+    //piston.set_value(pistonStat)
     /*if(pistonStat) {// if true
         pistonCount++;
         master.print(0, 0, "Pneumatics: %d", count); // print to controller screen (Cant call master in helpers)

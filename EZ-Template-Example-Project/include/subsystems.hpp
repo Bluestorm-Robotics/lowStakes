@@ -5,7 +5,7 @@
 //Port Definitions
 
 //Three wire
-#define goalGrabber_port 'A'
+#define goalGrabber_port 8
 
 // RJ45 Ports
 #define elevator_Motor -4
@@ -16,6 +16,7 @@
 inline pros::MotorGroup intakeGroup({ loader_Motor, elevator_Motor });
 inline pros::Motor intake(loader_Motor);
 inline pros::Motor elevator(elevator_Motor);
-inline pros::adi::DigitalOut piston (goalGrabber_port);
+inline pros::Motor piston(goalGrabber_port);
+//inline pros::adi::DigitalOut piston (goalGrabber_port);
 
 inline pros::Gps gps1(GPS_PORT); //change values (also not installed)
