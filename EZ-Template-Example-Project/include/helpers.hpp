@@ -37,12 +37,12 @@ inline void pistonTog(){ //Toggles piston
     pistonStat = !pistonStat; //Toggle switch
     if(pistonStat){
         piston.move(127);
-        pros::delay(1000);
+        pros::delay(500);
         piston.move(0);
     }
     else{
         piston.move(-127);
-        pros::delay(1000);
+        pros::delay(500);
         piston.move(0);
     }
     //piston.set_value(pistonStat)
