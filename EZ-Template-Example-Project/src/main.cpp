@@ -64,6 +64,7 @@ void initialize() {
   master.rumble(".");
 
   gps1.set_data_rate(10);
+  piston.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
 }
 
