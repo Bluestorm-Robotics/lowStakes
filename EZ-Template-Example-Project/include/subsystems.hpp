@@ -9,7 +9,7 @@
 
 // RJ45 Ports
 #define elevator_Motor -4
-#define loader_Motor 14
+#define loader_Motor -14
 #define GPS_PORT 18 //Currently Not installed
 
 // Your motors, sensors, etc. should go here.  Below are examples

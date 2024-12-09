@@ -12,8 +12,8 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-1, -2, -3},     // Left Chassis Ports (negative port will reverse it!)
-    {11, 12, 13},  // Right Chassis Ports (negative port will reverse it!)
+    {-1, 2},     // Left Chassis Ports (negative port will reverse it!)
+    {11, -12},  // Right Chassis Ports (negative port will reverse it!)
 
     7,      // IMU Port
     3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -59,7 +59,7 @@ void initialize() {
   });
 
   // Initialize chassis and auton selector
-  chassis.initialize();
+    chassis.initialize();
   ez::as::initialize();
   master.rumble(".");
 

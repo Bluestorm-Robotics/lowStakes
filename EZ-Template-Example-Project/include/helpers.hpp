@@ -20,7 +20,7 @@ inline bool intakeTog = false;
 
 inline void turnToHead(float deg){ //deg is requested heading (DEPRICATED FUNCTION)
     float current = gps1.get_heading(); //Current heading
-    float turn = abs(current - deg); // Absoloute value of degrees to turn
+    float turn = abs(current - deg); // Absolute value of degrees to turn
     if(current > deg){ //If requested heading is less than current heading turn left
         chassis.pid_turn_set(-turn, TURN_SPEED, true);
     }
