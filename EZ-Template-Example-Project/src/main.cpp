@@ -12,8 +12,8 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-1, 2},     // Left Chassis Ports (negative port will reverse it!)
-    {11, -12},  // Right Chassis Ports (negative port will reverse it!)
+    {-1, -2},     // Left Chassis Ports (negative port will reverse it!)
+    {11, 12},  //  pros::screen::print(TEXT_MEDIUM, 3, "owo whats this? a cowode?"); Right Chassis Ports (negative port will reverse it!)
 
     7,      // IMU Port
     3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -27,10 +27,10 @@ ez::Drive chassis(
 void initialize() {
   // Print our branding over your terminal :D
   //ez::ez_template_print();
-  //ez::print_to_screen("owo whats this? a cowode?");
+  //print_to_screen("owo whats this? a cowode?");
 
   pros::delay(500);  // Stop the user from doing anything while legacy ports configure
-
+  pros::screen::print(TEXT_MEDIUM, 1, "owo whats this? a cowode?");
 
   // Configure your chassis controls
   chassis.opcontrol_curve_buttons_toggle(false);  // Enables modifying the controller curve with buttons on the joysticks
