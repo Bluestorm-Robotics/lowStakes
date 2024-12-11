@@ -4,8 +4,8 @@
 
 
 //Constants
-inline const int DRIVE_SPEED = 40;
-inline const int TURN_SPEED = 40;
+inline const int DRIVE_SPEED = 60;
+inline const int TURN_SPEED = 60;
 inline const int SWING_SPEED = 40;
 inline const int elevatorRPMFlag = 100; //Threashold for detecting elevator jam
 

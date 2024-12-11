@@ -15,7 +15,7 @@
 #define Y_OFFSET -0.001
 #define X_INITIAL -1.366
 #define Y_INITIAL 0.69
-#define HEADING_INITIAL 283 
+#define HEADING_INITIAL 292 //was 283
 
 /*const int DRIVE_SPEED = 110;
 const int TURN_SPEED = 90;
@@ -236,11 +236,11 @@ void interfered_example() {
 
 // Gps Navigation plus inertial
 // Our own autonomouse
-void gpsNav(){
-  pros::Task HeadUpdate(headUpdate);
-  int curHead;
+/*void gpsNav(){ //Original
+  //pros::Task HeadUpdate(headUpdate);
+  //int curHead;
   //pistonTog();
-  gps1.initialize_full(X_OFFSET, Y_OFFSET, X_INITIAL, Y_INITIAL, HEADING_INITIAL);
+  //gps1.initialize_full(X_OFFSET, Y_OFFSET, X_INITIAL, Y_INITIAL, HEADING_INITIAL);
   chassis.pid_drive_set(-29_in, DRIVE_SPEED, true);
   chassis.pid_wait();
   pros::delay(100);
@@ -255,6 +255,34 @@ void gpsNav(){
   chassis.pid_wait();
   chassis.pid_drive_set(12_in, DRIVE_SPEED, true);
   chassis.pid_wait();
+  pros::delay(4000);
+  /*chassis.pid_turn_set(null_deg, TURN_SPEED);
+  chassis,pid_wait();
+  chassis.pid_drive_set(null_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  */
+//}
+
+void gpsNav(){
+  //pros::Task HeadUpdate(headUpdate);
+  //int curHead;
+  //pistonTog();
+  //gps1.initialize_full(X_OFFSET, Y_OFFSET, X_INITIAL, Y_INITIAL, HEADING_INITIAL);
+  chassis.pid_drive_set(-29_in, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+  pros::delay(100);
+  pistonTog();
+  chassis.pid_turn_set(345_deg, TURN_SPEED);
+  chassis.pid_wait_quick();
+  pros::Task Load(load);
+  chassis.pid_drive_set(14_in, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+  pros::delay(4000);
+  chassis.pid_turn_set(80_deg, TURN_SPEED);
+  chassis.pid_wait_quick();
+  chassis.pid_drive_set(12_in, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
   pros::delay(4000);
   /*chassis.pid_turn_set(null_deg, TURN_SPEED);
   chassis,pid_wait();

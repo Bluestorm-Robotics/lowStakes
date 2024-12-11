@@ -17,7 +17,7 @@ ez::Drive chassis(
 
     7,      // IMU Port
     3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
-    600);   // Wheel RPM
+    200);   // Wheel RPM
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -106,6 +106,7 @@ void autonomous() {
   chassis.drive_sensor_reset();               // Reset drive sensors to 0
   chassis.drive_brake_set(MOTOR_BRAKE_HOLD);  // Set motors to hold.  This helps autonomous consistency
   chassis.drive_angle_set(283); //Tells IMU what its heading is
+  pistonTog();
 
   ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
