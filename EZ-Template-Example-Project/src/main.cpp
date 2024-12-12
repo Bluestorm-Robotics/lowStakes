@@ -62,7 +62,7 @@ void initialize() {
     chassis.initialize();
   ez::as::initialize();
   master.rumble(".");
-
+  molmtr.set_brake_mode(MOTOR_BRAKE_HOLD);
   gps1.set_data_rate(10);
 
 }
@@ -127,6 +127,7 @@ void opcontrol() {
   // This is preference to what you like to drive on
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_HOLD;
   chassis.drive_brake_set(driver_preference_brake);
+  molmtr.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   while (true) {
     // PID Tuner
     // After you find values that you're happy with, you'll have to set them in auton.cpp
@@ -147,7 +148,7 @@ void opcontrol() {
 
     //chassis.opcontrol_tank();  // Tank control
      //chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
-     chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
+     chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcademotor_group.set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
     // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
 
@@ -160,8 +161,11 @@ void opcontrol() {
 
       if (master.get_digital(DIGITAL_Y)){
         pistonTog();
-        //pistonStat = !pistonStat; //Toggle switch
-        //piston.set_value(pistonStat);
+        pros::delay(500);
+      }
+      
+      if (master.get_digital(DIGITAL_X)){
+        mollyBTog();
         pros::delay(500);
       }
 
@@ -174,6 +178,16 @@ void opcontrol() {
       }
       else{
         intakeGroup.move(0);
+      }
+
+      if (master.get_digital(DIGITAL_UP)){
+        molmtr.move(70);
+      }
+      else if (master.get_digital(DIGITAL_DOWN)){
+        molmtr.move(-70);
+      }
+      else{
+        molmtr.move(0);
       }
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
