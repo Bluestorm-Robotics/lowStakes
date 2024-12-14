@@ -47,15 +47,9 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      Auton("GPS Navigation\n Blue right corner", gpsNav),
-      Auton("Example Drive\n\nDrive forward and come back.", drive_example),
-      Auton("Example Turn\n\nTurn 3 times.", turn_example),
-      Auton("Drive and Turn\n\nDrive forward, turn, come back. ", drive_and_turn),
-      Auton("Drive and Turn\n\nSlow down during drive.", wait_until_change_speed),
-      Auton("Swing Example\n\nSwing in an 'S' curve", swing_example),
-      Auton("Motion Chaining\n\nDrive forward, turn, and come back, but blend everything together :D", motion_chaining),
-      Auton("Combine all 3 movements", combining_movements),
-      Auton("Interference\n\nAfter driving forward, robot performs differently if interfered or not.", interfered_example),
+      Auton("redRight\n Red right corner single side", redRight),
+      Auton("redLeft\n Red left corner single side", redLeft),
+      Auton("BlueRight\n Blue right corner", blueRight),
   });
 
   // Initialize chassis and auton selector
@@ -105,7 +99,6 @@ void autonomous() {
   chassis.drive_imu_reset();                  // Reset gyro position to 0
   chassis.drive_sensor_reset();               // Reset drive sensors to 0
   chassis.drive_brake_set(MOTOR_BRAKE_HOLD);  // Set motors to hold.  This helps autonomous consistency
-  chassis.drive_angle_set(283); //Tells IMU what its heading is
   pistonTog();
 
   ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector

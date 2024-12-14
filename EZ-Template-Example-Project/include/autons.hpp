@@ -4,7 +4,9 @@
 
 extern Drive chassis;
 
-void gpsNav(); //actual auton test
+void blueRight();
+void redRight();
+void redLeft(); //actual auton test
 void drive_example();
 void turn_example();
 void drive_and_turn();

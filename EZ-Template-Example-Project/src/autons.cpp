@@ -15,7 +15,7 @@
 #define Y_OFFSET -0.001
 #define X_INITIAL -1.366
 #define Y_INITIAL 0.69
-#define HEADING_INITIAL 292 //was 283
+//int HEADING_INITIAL 282 //was 283
 
 /*const int DRIVE_SPEED = 110;
 const int TURN_SPEED = 90;
@@ -290,35 +290,120 @@ void interfered_example() {
 }*/
 
 
-void gpsNav(){
-  //pros::Task HeadUpdate(headUpdate);
+void redLeft(){
+  chassis.drive_angle_set(283); //Tells IMU what its heading is
+  pros::Task HeadUpdate(headUpdate);
   //int curHead;
   //pistonTog();
   //gps1.initialize_full(X_OFFSET, Y_OFFSET, X_INITIAL, Y_INITIAL, HEADING_INITIAL);
-  chassis.pid_drive_set(-28_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(-29_in, DRIVE_SPEED-20, true);
   chassis.pid_wait_quick();
   pros::delay(100);
   pistonTog();
-  deployMolly();
-  chassis.pid_turn_set(30.20_deg, TURN_SPEED);
+  //deployMolly();
+  chassis.pid_turn_set(35.20_deg, TURN_SPEED);
   chassis.pid_wait_quick();
   pros::Task Load(load);
-  pros::Task Eject(eject);
-  chassis.pid_drive_set(18_in, DRIVE_SPEED, true);
+  //pros::Task Eject(eject);
+  chassis.pid_drive_set(15_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
-  pros::delay(4000);
-  chassis.pid_drive_set(-18_in, DRIVE_SPEED, true);
+  pros::delay(2000);
+  chassis.pid_drive_set(-15_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
-  chassis.pid_turn_set(345_deg, TURN_SPEED);
+  chassis.pid_turn_set(335_deg, TURN_SPEED);
   chassis.pid_wait_quick();
   chassis.pid_drive_set(14_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
-  pros::delay(4000);
-  chassis.pid_turn_set(60_deg, TURN_SPEED);
+  pros::delay(2000);
+  chassis.pid_turn_set(40_deg, TURN_SPEED);
   chassis.pid_wait_quick();
-  chassis.pid_drive_set(12_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(11_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
-  pros::delay(4000);
+  pros::delay(2000);
+  chassis.pid_drive_set(-13_in, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+  Load.remove();
+  //intakeGroup.move(0);
+  chassis.pid_turn_set(335_deg, TURN_SPEED);
+  chassis.pid_wait_quick();
+  chassis.pid_drive_set(-20_in, 127, true);
+  chassis.pid_wait_quick();
+  /*chassis.pid_turn_set(null_deg, TURN_SPEED);
+  chassis,pid_wait();
+  chassis.pid_drive_set(null_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  */
+}
+void redRight(){
+  chassis.drive_angle_set(290); //Tells IMU what its heading is
+  pros::Task HeadUpdate(headUpdate);
+  chassis.pid_drive_set(-29_in, DRIVE_SPEED-20, true);
+  chassis.pid_wait_quick();
+  pros::delay(100);
+  pistonTog();
+  chassis.pid_turn_set(170_deg, TURN_SPEED);
+  chassis.pid_wait_quick();
+  pros::Task Load(load);
+  chassis.pid_drive_set(18_in, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+  chassis.pid_drive_set(-18_in, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+  pros::delay(1000);
+  pistonTog();
+
+  chassis.pid_drive_set(8_in, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+  chassis.pid_turn_set(270_deg, TURN_SPEED);
+  chassis.pid_wait_quick();
+  //chassis.pid_turn_set(300_deg, TURN_SPEED);
+  //chassis.pid_wait_quick();
+  chassis.pid_drive_set(-16_in, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+  pros::delay(100);
+  pistonTog();
+  chassis.pid_drive_set(16_in, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+}
+
+void blueRight(){
+  chassis.drive_angle_set(70); //Tells IMU what its heading is
+  pros::Task HeadUpdate(headUpdate);
+  //int curHead;
+  //pistonTog();
+  //gps1.initialize_full(X_OFFSET, Y_OFFSET, X_INITIAL, Y_INITIAL, HEADING_INITIAL);
+  chassis.pid_drive_set(-29_in, DRIVE_SPEED-20, true);
+  chassis.pid_wait_quick();
+  pros::delay(100);
+  pistonTog();
+  //deployMolly();
+  chassis.pid_turn_set(320_deg, TURN_SPEED);
+  chassis.pid_wait_quick();
+  pros::Task Load(load);
+  //pros::Task Eject(eject);
+  chassis.pid_drive_set(10_in, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+  pros::delay(2000);
+  chassis.pid_drive_set(-10_in, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+  chassis.pid_turn_set(0_deg, TURN_SPEED);
+  chassis.pid_wait_quick();
+  chassis.pid_drive_set(14_in, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+  pros::delay(2000);
+  chassis.pid_turn_set(31-_deg, TURN_SPEED);
+  chassis.pid_wait_quick();
+  chassis.pid_drive_set(11_in, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+  pros::delay(2000);
+  chassis.pid_drive_set(-13_in, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+  Load.remove();
+  //intakeGroup.move(0);
+  chassis.pid_turn_set(335_deg, TURN_SPEED);
+  chassis.pid_wait_quick();
+  chassis.pid_drive_set(-20_in, 127, true);
+  chassis.pid_wait_quick();
   /*chassis.pid_turn_set(null_deg, TURN_SPEED);
   chassis,pid_wait();
   chassis.pid_drive_set(null_in, DRIVE_SPEED, true);

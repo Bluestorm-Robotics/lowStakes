@@ -27,6 +27,6 @@ inline pros::adi::DigitalOut piston (goalGrabber_port);
 inline pros::adi::DigitalOut ejecter (goalGrabber_port);
 inline pros::adi::DigitalOut mollyPiston (mollyport);
 
-
+//Sensors
 inline pros::Gps gps1(GPS_PORT); //change values (also not installed)
 inline pros::Optical opitcal1(OPTICAL_PORT); //rgb sensor on elevator

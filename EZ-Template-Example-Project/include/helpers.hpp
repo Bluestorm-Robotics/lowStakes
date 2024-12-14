@@ -4,10 +4,12 @@
 
 
 //Constants
-inline const int DRIVE_SPEED = 100;
+inline const int DRIVE_SPEED = 110;
 inline const int TURN_SPEED = 90;
 inline const int SWING_SPEED = 40;
 inline const int elevatorRPMFlag = 100; //Threashold for detecting elevator jam
+inline const int blue = 200;
+inline const int red = 30;
 
 
 //Changing Variables
@@ -82,17 +84,17 @@ inline void mollyBTog(){ //Toggles piston
     }
     else intakeGroup.move(0);
 }*/
-inline void eject(){
+/*inline void eject(){
     opitcal1.set_led_pwm(100);
     while(true){
-        if((opitcal1.get_rgb().blue > opitcal1.get_rgb().red) && (isJammed == false)){ //If blue value greater than red then eject
+        if((opitcal1.get_rgb().blue < ) && (isJammed == false)){ //If blue value greater than red then eject
             ejectTog();
             pros::delay(700);
             ejectTog();
         }
         else pros::delay(500);
     }
-}
+}*/
 
 inline void load(){
     intakeGroup.move(127);
@@ -132,7 +134,8 @@ inline void deployMolly(){
 
 inline void headUpdate(){
     while(true){
-        master.print(0,0, "heading: %f", gps1.get_heading());
+        float rgbVal = opitcal1.get_rgb().blue;
+        master.print(0,0, "RGB: %f", rgbVal);
         pros::delay(500);
     }
 }
