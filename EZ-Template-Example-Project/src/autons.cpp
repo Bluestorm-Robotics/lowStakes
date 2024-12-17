@@ -305,10 +305,10 @@ void redLeft(){
   chassis.pid_wait_quick();
   pros::Task Load(load);
   //pros::Task Eject(eject);
-  chassis.pid_drive_set(15_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(12_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
   pros::delay(2000);
-  chassis.pid_drive_set(-15_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(-12_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
   chassis.pid_turn_set(335_deg, TURN_SPEED);
   chassis.pid_wait_quick();
@@ -317,10 +317,10 @@ void redLeft(){
   pros::delay(2000);
   chassis.pid_turn_set(40_deg, TURN_SPEED);
   chassis.pid_wait_quick();
-  chassis.pid_drive_set(11_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(9_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
   pros::delay(2000);
-  chassis.pid_drive_set(-13_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(-10_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
   Load.remove();
   //intakeGroup.move(0);
@@ -381,17 +381,17 @@ void blueRight(){
   chassis.pid_wait_quick();
   pros::Task Load(load);
   //pros::Task Eject(eject);
-  chassis.pid_drive_set(10_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(9_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
   pros::delay(2000);
-  chassis.pid_drive_set(-10_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(-9_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
   chassis.pid_turn_set(0_deg, TURN_SPEED);
   chassis.pid_wait_quick();
   chassis.pid_drive_set(14_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
   pros::delay(2000);
-  chassis.pid_turn_set(31-_deg, TURN_SPEED);
+  chassis.pid_turn_set(31_deg, TURN_SPEED);
   chassis.pid_wait_quick();
   chassis.pid_drive_set(11_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
@@ -410,4 +410,8 @@ void blueRight(){
   chassis.pid_wait();
 
   */
+}
+
+void skillsAuton(){
+  
 }

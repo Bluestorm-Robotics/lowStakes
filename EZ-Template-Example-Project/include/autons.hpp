@@ -7,6 +7,7 @@ extern Drive chassis;
 void blueRight();
 void redRight();
 void redLeft(); //actual auton test
+void skillsAuton();
 void drive_example();
 void turn_example();
 void drive_and_turn();

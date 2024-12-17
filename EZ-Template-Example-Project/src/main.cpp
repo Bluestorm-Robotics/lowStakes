@@ -50,6 +50,7 @@ void initialize() {
       Auton("redRight\n Red right corner single side", redRight),
       Auton("redLeft\n Red left corner single side", redLeft),
       Auton("BlueRight\n Blue right corner", blueRight),
+      Auton("SKills Auton", skillsAuton),
   });
 
   // Initialize chassis and auton selector
@@ -158,9 +159,13 @@ void opcontrol() {
       }
       
       if (master.get_digital(DIGITAL_X)){
-        mollyBTog();
+        //mollyBTog();
         pros::delay(500);
       }
+      if (master.get_digital(DIGITAL_R2)){
+        intake.move(-127);
+      }
+
 
       if (master.get_digital(DIGITAL_L1)){
         intakeGroup.move(127);
@@ -174,10 +179,10 @@ void opcontrol() {
       }
 
       if (master.get_digital(DIGITAL_UP)){
-        molmtr.move(70);
+        flipper.set_value(true);
       }
       else if (master.get_digital(DIGITAL_DOWN)){
-        molmtr.move(-70);
+        flipper.set_value(false);
       }
       else{
         molmtr.move(0);
