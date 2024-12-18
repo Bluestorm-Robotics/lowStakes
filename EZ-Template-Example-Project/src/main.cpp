@@ -50,6 +50,7 @@ void initialize() {
       Auton("redRight\n Red right corner single side", redRight),
       Auton("redLeft\n Red left corner single side", redLeft),
       Auton("BlueRight\n Blue right corner", blueRight),
+      Auton("PID tuner", default_constants),
   });
 
   // Initialize chassis and auton selector
@@ -173,7 +174,7 @@ void opcontrol() {
         intakeGroup.move(0);
       }
 
-      if (master.get_digital(DIGITAL_UP)){
+      /*if (master.get_digital(DIGITAL_UP)){
         molmtr.move(70);
       }
       else if (master.get_digital(DIGITAL_DOWN)){
@@ -181,7 +182,7 @@ void opcontrol() {
       }
       else{
         molmtr.move(0);
-      }
+      }*/
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
