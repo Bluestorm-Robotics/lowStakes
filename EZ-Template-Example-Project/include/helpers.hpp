@@ -56,6 +56,14 @@ inline void ejectTog(){ //Toggles piston
     }*/
 }
 
+inline void mollyBTog(){ //Toggles piston
+    mollyBStat = !mollyBStat; //Toggle switch
+    mollyPiston.set_value(mollyBStat);
+    /*if(pistonStat) {// if true
+        pistonCount++;
+        master.print(0, 0, "Pneumatics: %d", count); // print to controller screen (Cant call master in helpers)
+    }*/
+}
 /*inline void load(bool enabled){
     if (enabled){
         intakeGroup.move(127);
@@ -109,7 +117,7 @@ inline void load(){
         pros::delay(500);
     }
 }
-/*inline void deployMolly(){
+inline void deployMolly(){
     bool isDeploying = true;
     molmtr.move(100);
     pros::delay(500);
@@ -121,8 +129,8 @@ inline void load(){
             molmtr.move_relative(-20, 100);
         }
         else pros::delay(100);
-    }
-}*/
+    }*/
+}
 
 inline void headUpdate(){
     while(true){
