@@ -50,16 +50,69 @@ void initialize() {
       Auton("redRight\n Red right corner single side", redRight),
       Auton("redLeft\n Red left corner single side", redLeft),
       Auton("BlueRight\n Blue right corner", blueRight),
+      Auton("PID Tuner", measure_offsets),
   });
 
   // Initialize chassis and auton selector
-    chassis.initialize();
+  chassis.initialize();
   ez::as::initialize();
   master.rumble(".");
   molmtr.set_brake_mode(MOTOR_BRAKE_HOLD);
   gps1.set_data_rate(10);
+  
 
 }
+/**
+ * Simplifies printing tracker values to the brain screen
+ */
+void screen_print_tracker(ez::tracking_wheel *tracker, std::string name, int line) {
+  std::string tracker_value = "", tracker_width = "";
+  // Check if the tracker exists
+  if (tracker != nullptr) {
+    tracker_value = name + " tracker: " + util::to_string_with_precision(tracker->get());             // Make text for the tracker value
+    tracker_width = "  width: " + util::to_string_with_precision(tracker->distance_to_center_get());  // Make text for the distance to center
+  }
+  ez::screen_print(tracker_value + tracker_width, line);  // Print final tracker text
+}
+
+/**
+ * Ez screen task
+ * Adding new pages here will let you view them during user control or autonomous
+ * and will help you debug problems you're having
+ */
+void ez_screen_task() {
+  while (true) {
+    // Only run this when not connected to a competition switch
+    if (!pros::competition::is_connected()) {
+      // Blank page for odom debugging
+      if (chassis.odom_enabled() && !chassis.pid_tuner_enabled()) {
+        // If we're on the first blank page...
+        if (ez::as::page_blank_is_on(0)) {
+          // Display X, Y, and Theta
+          ez::screen_print("x: " + util::to_string_with_precision(chassis.odom_x_get()) +
+                               "\ny: " + util::to_string_with_precision(chassis.odom_y_get()) +
+                               "\na: " + util::to_string_with_precision(chassis.odom_theta_get()),
+                           1);  // Don't override the top Page line
+
+          // Display all trackers that are being used
+          screen_print_tracker(chassis.odom_tracker_left, "l", 4);
+          screen_print_tracker(chassis.odom_tracker_right, "r", 5);
+          screen_print_tracker(chassis.odom_tracker_back, "b", 6);
+          screen_print_tracker(chassis.odom_tracker_front, "f", 7);
+        }
+      }
+    }
+
+    // Remove all blank pages when connected to a comp switch
+    else {
+      if (ez::as::page_blank_amount() > 0)
+        ez::as::page_blank_remove_all();
+    }
+
+    pros::delay(ez::util::DELAY_TIME);
+  }
+}
+pros::Task ezScreenTask(ez_screen_task);
 
 /**
  * Runs while the robot is in the disabled state of Field Management System or
@@ -117,6 +170,7 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+  chassis.pid_tuner_toggle();
   // This is preference to what you like to drive on
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_HOLD;
   chassis.drive_brake_set(driver_preference_brake);
@@ -129,8 +183,9 @@ void opcontrol() {
       //  When enabled:
       //  * use A and Y to increment / decrement the constants
       //  * use the arrow keys to navigate the constants
-      //if (master.get_digital_new_press(DIGITAL_X)) chassis.pid_tuner_toggle();
-    
+      if (master.get_digital_new_press(DIGITAL_A)){
+        chassis.pid_tuner_toggle();
+      }
       // Trigger the selected autonomous routine
       if (master.get_digital(DIGITAL_B) && master.get_digital(DIGITAL_DOWN)) {
         autonomous();
@@ -148,8 +203,8 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
-      elevatorRPM = elevator.get_actual_velocity();
-      master.print(0,0, "RPM: %d", elevatorRPM);
+      //gelevatorRPM = elevator.get_actual_velocity();
+      //master.print(0,0, "RPM: %d", elevatorRPM);
 
 
       if (master.get_digital(DIGITAL_Y)){
@@ -173,7 +228,7 @@ void opcontrol() {
         intakeGroup.move(0);
       }
 
-      if (master.get_digital(DIGITAL_UP)){
+      /*if (master.get_digital(DIGITAL_UP)){
         molmtr.move(70);
       }
       else if (master.get_digital(DIGITAL_DOWN)){
@@ -181,7 +236,7 @@ void opcontrol() {
       }
       else{
         molmtr.move(0);
-      }
+      }*/
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
