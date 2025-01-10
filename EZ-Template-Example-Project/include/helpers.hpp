@@ -140,6 +140,14 @@ inline void headUpdate(){
     }
 }
 
+inline void intakeVelocity(){
+    while(true){
+        float velocity = intake.get_actual_velocity();
+        master.print(0,0, "Intake: %f", velocity);
+        pros::delay(500);
+    }
+}
+
 
 inline void turnToIMU(float deg){ //deg is requested heading
     float current = chassis.drive_imu_get(); //Current heading
