@@ -50,6 +50,7 @@ void initialize() {
       Auton("redRight\n Red right corner single side", redRight),
       Auton("redLeft\n Red left corner single side", redLeft),
       Auton("BlueRight\n Blue right corner", blueRight),
+      Auton("Skills Auton", skillsAuton),
       Auton("PID Tuner", measure_offsets),
   });
 
@@ -175,7 +176,7 @@ void opcontrol() {
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_HOLD;
   chassis.drive_brake_set(driver_preference_brake);
   molmtr.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-  pros::Task IntakeVelocity(intakeVelocity);
+  //pros::Task IntakeVelocity(intakeVelocity);
   while (true) {
     // PID Tuner
     // After you find values that you're happy with, you'll have to set them in auton.cpp
