@@ -495,7 +495,7 @@ void skillsAuton(){
   chassis.pid_wait_quick();
   chassis.pid_turn_set(0_deg, TURN_SPEED, true);
   chassis.pid_wait_quick();
-  chassis.pid_drive_set(-20_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(-19_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
   pistonTog();
   pros::delay(500);
@@ -546,9 +546,14 @@ void skillsAuton(){
   chassis.pid_wait_quick();
   chassis.pid_turn_set(180_deg, TURN_SPEED, true);
   chassis.pid_wait_quick();
-  chassis.pid_drive_set(-53_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(-42_in, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+  chassis.pid_turn_set(180_deg, TURN_SPEED, true);
+  chassis.pid_wait_quick();
+  chassis.pid_drive_set(-12_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
   pistonTog();
+
 }
 
 
