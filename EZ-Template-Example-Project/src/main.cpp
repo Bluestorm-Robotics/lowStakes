@@ -51,6 +51,7 @@ void initialize() {
       Auton("redLeft\n Red left corner single side", redLeft),
       Auton("BlueRight\n Blue right corner", blueRight),
       Auton("Skills Auton", skillsAuton),
+      Auton("Skills Auton\n NON QUICK WAIT", skillsAutonNonQuick),
       Auton("PID Tuner", measure_offsets),
   });
 
