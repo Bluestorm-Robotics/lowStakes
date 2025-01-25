@@ -117,7 +117,7 @@ inline void load(){
         pros::delay(500);
     }
 }
-inline void deployMolly(){
+/*inline void deployMolly(){
     bool isDeploying = true;
     molmtr.move(100);
     pros::delay(500);
@@ -129,8 +129,8 @@ inline void deployMolly(){
             molmtr.move_relative(-20, 100);
         }
         else pros::delay(100);
-    }*/
-}
+    }
+}*/
 
 inline void headUpdate(){
     while(true){

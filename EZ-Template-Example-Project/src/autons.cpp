@@ -526,7 +526,7 @@ void skillsAuton(){
   chassis.pid_wait_quick();
   chassis.pid_turn_set(180_deg, TURN_SPEED, true);
   chassis.pid_wait_quick();
-  chassis.pid_drive_set(13_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(13_in, DRIVE_SPEED - 20, true);
   chassis.pid_wait_quick();
   pros::delay(500);
   chassis.pid_turn_set(55_deg, TURN_SPEED, true);
@@ -534,17 +534,20 @@ void skillsAuton(){
   pros::delay(1000);
   Load.suspend();
   intakeGroup.move(0);
-  chassis.pid_drive_set(-22_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
+  pros::delay(500);
   pistonTog();
+  chassis.pid_drive_set(-20_in, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
   pros::delay(500);
   chassis.pid_drive_set(1_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
   chassis.pid_drive_set(-2_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
-  chassis.pid_drive_set(11_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(9_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
   chassis.pid_turn_set(180_deg, TURN_SPEED, true);
+  chassis.pid_wait_quick();
+  chassis.pid_drive_set(-24_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
   chassis.pid_drive_set(-42_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
@@ -564,33 +567,36 @@ void skillsAutonNonQuick(){
   chassis.drive_angle_set(90); //Tells IMU what its heading is
   pros::Task Load(load);
   pros::delay(1000);
-  chassis.pid_drive_set(11_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(11_in, DRIVE_SPEED, true); // line up with grid
   chassis.pid_wait();
-  chassis.pid_turn_set(0_deg, TURN_SPEED, true);
+  chassis.pid_turn_set(0_deg, TURN_SPEED, true);  // turn with back to right stake
   chassis.pid_wait();
   chassis.pid_drive_set(-20_in, DRIVE_SPEED, true);
   chassis.pid_wait();
-  pistonTog();
+  pistonTog(); // grab right stake
   pros::delay(500);
-  chassis.pid_drive_set(3_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(3_in, DRIVE_SPEED, true); // line up with grid
   chassis.pid_wait();
-  chassis.pid_turn_set(90_deg, TURN_SPEED, true);
+  chassis.pid_turn_set(90_deg, TURN_SPEED, true); // turn 
   chassis.pid_wait();
-  chassis.pid_drive_set(21_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(21_in, DRIVE_SPEED, true); // pick up first ring
   chassis.pid_wait();
   pros::delay(500);
   chassis.pid_turn_set(150_deg, TURN_SPEED, true);
   chassis.pid_wait();
-  chassis.pid_drive_set(25_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(25_in, DRIVE_SPEED, true); // pick up second ring
   chassis.pid_wait();
-  chassis.pid_drive_set(-7_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(-6_in, DRIVE_SPEED, true);
   chassis.pid_wait();
   chassis.pid_turn_set(270_deg, TURN_SPEED, true);
   chassis.pid_wait();
-  chassis.pid_drive_set(12_in, TURN_SPEED, true);
+  chassis.pid_drive_set(12_in, TURN_SPEED, true); //pick up third ring
+  chassis.pid_wait();
+  pros::delay(500); 
+  chassis.pid_drive_set(17_in, TURN_SPEED, true); //pick up third ring
   chassis.pid_wait();
   pros::delay(500);
-  chassis.pid_drive_set(25_in, TURN_SPEED, true);
+  chassis.pid_drive_set(9_in, TURN_SPEED, true); // pick up fourth ring
   chassis.pid_wait();
   pros::delay(500);
   chassis.pid_turn_set(205_deg, TURN_SPEED, true);
@@ -602,20 +608,21 @@ void skillsAutonNonQuick(){
   chassis.pid_drive_set(13_in, DRIVE_SPEED, true);
   chassis.pid_wait();
   pros::delay(500);
-  chassis.pid_turn_set(55_deg, TURN_SPEED, true);
+  chassis.pid_turn_set(45_deg, TURN_SPEED, true);
   chassis.pid_wait();
   pros::delay(1000);
   Load.suspend();
   intakeGroup.move(0);
-  chassis.pid_drive_set(-22_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
+  pros::delay(500);
   pistonTog();
+  chassis.pid_drive_set(-14_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
   pros::delay(500);
   chassis.pid_drive_set(1_in, DRIVE_SPEED, true);
   chassis.pid_wait();
   chassis.pid_drive_set(-2_in, DRIVE_SPEED, true);
   chassis.pid_wait();
-  chassis.pid_drive_set(11_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(10_in, DRIVE_SPEED, true);
   chassis.pid_wait();
   chassis.pid_turn_set(180_deg, TURN_SPEED, true);
   chassis.pid_wait();
@@ -630,9 +637,13 @@ void skillsAutonNonQuick(){
   chassis.pid_turn_set(90_deg, TURN_SPEED, true);
   chassis.pid_wait();
   Load.resume();
-  chassis.pid_drive_set(1_ft, DRIVE_SPEED, true);
+  chassis.pid_drive_set(21_in, DRIVE_SPEED, true);
   chassis.pid_wait();
   pros::delay(5000);
+  chassis.pid_turn_set(30_deg, TURN_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(25_in, DRIVE_SPEED, true); // pick up second ring
+  chassis.pid_wait();
 }
 
 

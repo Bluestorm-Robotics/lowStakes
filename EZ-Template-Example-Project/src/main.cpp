@@ -59,7 +59,7 @@ void initialize() {
   chassis.initialize();
   ez::as::initialize();
   master.rumble(".");
-  molmtr.set_brake_mode(MOTOR_BRAKE_HOLD);
+  ladyBrown.set_brake_mode(MOTOR_BRAKE_HOLD);
   gps1.set_data_rate(10);
   
 
@@ -176,7 +176,7 @@ void opcontrol() {
   // This is preference to what you like to drive on
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_HOLD;
   chassis.drive_brake_set(driver_preference_brake);
-  molmtr.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+  ladyBrown.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   //pros::Task IntakeVelocity(intakeVelocity);
   while (true) {
     // PID Tuner
@@ -232,15 +232,16 @@ void opcontrol() {
         intakeGroup.move(0);
       }
 
-      /*if (master.get_digital(DIGITAL_UP)){
-        molmtr.move(70);
+      if (master.get_digital(DIGITAL_UP)){
+        ladyBrown.move(70);
       }
       else if (master.get_digital(DIGITAL_DOWN)){
-        molmtr.move(-70);
+        ladyBrown.move(-70);
       }
       else{
-        molmtr.move(0);
-      }*/
+        ladyBrown.move(0);
+        ladyBrown.brake();
+      }
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }

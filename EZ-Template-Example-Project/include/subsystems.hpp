@@ -11,19 +11,19 @@
 
 // RJ45 Ports
 #define elevator_Motor 4
-#define elevator_Motor2 13
+#define elevator_Motor2 -13
 #define loader_Motor -14
 #define GPS_PORT 18 //Currently Not installed
-#define OPTICAL_PORT 15
-#define molmtrPrt 9
+#define OPTICAL_PORT 4
+#define ladyBrown_PORT 15
  
 // Your motors, sensors, etc. should go here.  Below are examples
-inline pros::MotorGroup intakeGroup({ loader_Motor, elevator_Motor });
+inline pros::MotorGroup intakeGroup({ loader_Motor, elevator_Motor, elevator_Motor2 });
 inline pros::Motor intake(loader_Motor);
 inline pros::MotorGroup elevator({ elevator_Motor, elevator_Motor2});
 inline pros::Motor elevatorLeft(elevator_Motor);
 inline pros::Motor elevatorRight(elevator_Motor2);
-inline pros::Motor molmtr(molmtrPrt);
+inline pros::Motor ladyBrown (ladyBrown_PORT);
 
 //Pistons
 inline pros::adi::DigitalOut piston (goalGrabber_port);
@@ -33,3 +33,6 @@ inline pros::adi::DigitalOut mollyPiston (mollyport);
 //Sensors
 inline pros::Gps gps1(GPS_PORT); //change values (also not installed)
 inline pros::Optical opitcal1(OPTICAL_PORT); //rgb sensor on elevator
+
+//PID
+inline ez::PID ladyBrownPID{0.45, 0, 0, 0, "LadyBrown"};
