@@ -13,18 +13,23 @@
 #define elevator_Motor 4
 #define elevator_Motor2 -13
 #define loader_Motor -14
+#define loader_Motor2 -15
+
 #define GPS_PORT 18 //Currently Not installed
 #define OPTICAL_PORT 4
-#define ladyBrown_PORT 15
+#define ladyBrown_PORT 16
  
 // Your motors, sensors, etc. should go here.  Below are examples
-inline pros::MotorGroup intakeGroup({ loader_Motor, elevator_Motor, elevator_Motor2 });
-inline pros::Motor intake(loader_Motor);
+inline pros::MotorGroup intakeGroup({ loader_Motor, loader_Motor2, elevator_Motor, elevator_Motor2 });
 inline pros::MotorGroup elevator({ elevator_Motor, elevator_Motor2});
 inline pros::Motor elevatorLeft(elevator_Motor);
 inline pros::Motor elevatorRight(elevator_Motor2);
-inline pros::Motor ladyBrown (ladyBrown_PORT);
 
+inline pros::MotorGroup intake({ loader_Motor, loader_Motor2 });
+inline pros::Motor intake1(loader_Motor);
+inline pros::Motor intake2(loader_Motor2);
+
+inline pros::Motor ladyBrown (ladyBrown_PORT);
 //Pistons
 inline pros::adi::DigitalOut piston (goalGrabber_port);
 inline pros::adi::DigitalOut ejecter (goalGrabber_port);
