@@ -58,6 +58,8 @@ void default_constants() {
   chassis.odom_boomerang_dlead_set(0.625);     // This handles how aggressive the end of boomerang motions are
 
   chassis.pid_angle_behavior_set(ez::shortest);  // Changes the default behavior for turning, this defaults it to the shortest path there
+  //chassis.drive_imu_scaler_set(.9139 );
+  chassis.drive_imu_scaler_set(1.005);
 }
 
 void measure_offsets() {
@@ -591,13 +593,7 @@ void skillsAutonNonQuick(){
   chassis.pid_wait();
   chassis.pid_turn_set(270_deg, TURN_SPEED, true);
   chassis.pid_wait();
-  chassis.pid_drive_set(12_in, TURN_SPEED, true); //pick up third ring
-  chassis.pid_wait();
-  pros::delay(500); 
-  chassis.pid_drive_set(17_in, TURN_SPEED, true);
-  chassis.pid_wait();
-  pros::delay(500);
-  chassis.pid_drive_set(9_in, TURN_SPEED, true); // pick up fourth ring
+  chassis.pid_drive_set(38_in, TURN_SPEED, true); //pick up third ring
   chassis.pid_wait();
   pros::delay(500);
   chassis.pid_turn_set(205_deg, TURN_SPEED, true);
@@ -623,18 +619,15 @@ void skillsAutonNonQuick(){
   chassis.pid_wait();
   chassis.pid_drive_set(-2_in, DRIVE_SPEED, true); //wiggle goal off
   chassis.pid_wait();
+  elevator.move_relative(-50, 50);
   chassis.pid_drive_set(5_in, DRIVE_SPEED, true); //exit corner
   chassis.pid_wait();
   chassis.pid_turn_set(180_deg, TURN_SPEED, true);
   chassis.pid_wait();
-  chassis.pid_drive_set(-42_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
-  chassis.pid_turn_set(180_deg, TURN_SPEED, true);
+  chassis.pid_drive_set(-54_in, DRIVE_SPEED, true);
   chassis.pid_wait();
 
   //Red left corner
-  chassis.pid_drive_set(-12_in, DRIVE_SPEED, true);
-  chassis.pid_wait();
   pistonTog();
   pros::delay(500);
   chassis.pid_turn_set(90_deg, TURN_SPEED, true);
@@ -642,20 +635,13 @@ void skillsAutonNonQuick(){
   Load.resume();
   chassis.pid_drive_set(21_in, DRIVE_SPEED, true);
   chassis.pid_wait();
-  pros::delay(5000);
   chassis.pid_turn_set(30_deg, TURN_SPEED, true);
   chassis.pid_wait();
   chassis.pid_drive_set(25_in, DRIVE_SPEED, true); // pick up second ring
   chassis.pid_wait();
   chassis.pid_turn_set(270_deg, TURN_SPEED, true);
   chassis.pid_wait();
-  chassis.pid_drive_set(12_in, TURN_SPEED, true); //pick up third ring
-  chassis.pid_wait();
-  pros::delay(500); 
-  chassis.pid_drive_set(17_in, TURN_SPEED, true); //pick up third ring
-  chassis.pid_wait();
-  pros::delay(500);
-  chassis.pid_drive_set(9_in, TURN_SPEED, true); // pick up fourth ring
+  chassis.pid_drive_set(38_in, TURN_SPEED, true); //pick up third ring
   chassis.pid_wait();
   pros::delay(500);
   chassis.pid_turn_set(335_deg, TURN_SPEED, true);
@@ -683,7 +669,13 @@ void skillsAutonNonQuick(){
   chassis.pid_wait();
   chassis.pid_drive_set(-2_in, DRIVE_SPEED, true);
   chassis.pid_wait();
+  elevator.move_relative(-50, 50);
   chassis.pid_drive_set(9_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+}
+void IMUScalingTuner(){
+  //chassis.drive_angle_set(0);
+  chassis.pid_turn_set(3600_deg, 110, ez::raw);
   chassis.pid_wait();
 }
 

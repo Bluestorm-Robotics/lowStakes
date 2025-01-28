@@ -9,6 +9,7 @@ void redRight();
 void redLeft(); //actual auton test
 void skillsAuton();// skillissue
 void skillsAutonNonQuick();
+void IMUScalingTuner();
 void drive_example();
 void turn_example();
 void drive_and_turn();
@@ -18,5 +19,4 @@ void motion_chaining();
 void combining_movements();
 void interfered_example();
 void measure_offsets();
-
 void default_constants();

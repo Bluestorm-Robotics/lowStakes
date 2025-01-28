@@ -52,7 +52,8 @@ void initialize() {
       Auton("BlueRight\n Blue right corner", blueRight),
       Auton("Skills Auton", skillsAuton),
       Auton("Skills Auton\n NON QUICK WAIT", skillsAutonNonQuick),
-      Auton("PID Tuner", measure_offsets),
+      Auton("IMUScale Tuner", IMUScalingTuner),
+      //Auton("PID Tuner", measure_offsets),
   });
 
   // Initialize chassis and auton selector
