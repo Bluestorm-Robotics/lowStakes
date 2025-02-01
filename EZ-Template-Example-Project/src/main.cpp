@@ -27,7 +27,6 @@ ez::Drive chassis(
 void initialize() {
   // Print our branding over your terminal :D
   //ez::ez_template_print();
-  //print_to_screen("owo whats this? a cowode?");
 
   pros::delay(500);  // Stop the user from doing anything while legacy ports configure
   pros::screen::print(TEXT_MEDIUM, 1, "owo whats this? a cowode?");
@@ -50,6 +49,7 @@ void initialize() {
       Auton("redRight\n Red right corner single side", redRight),
       Auton("redLeft\n Red left corner single side", redLeft),
       Auton("BlueRight\n Blue right corner", blueRight),
+      Auton("BlueLeft", blueLeft),
       Auton("Skills Auton", skillsAuton),
       Auton("Skills Auton\n NON QUICK WAIT", skillsAutonNonQuick),
       Auton("IMUScale Tuner", IMUScalingTuner),

@@ -11,7 +11,7 @@
 
 // RJ45 Ports
 #define elevator_Motor 4
-#define elevator_Motor2 -13
+#define elevator_Motor2 13
 #define loader_Motor -14
 #define loader_Motor2 -15
 
