@@ -381,8 +381,8 @@ void redLeft(){
   //deployMolly();
   chassis.pid_turn_set(30_deg, TURN_SPEED);
   chassis.pid_wait(); 
-  //pros::Task Load(load);
-  Load.resume();
+  pros::Task Load(load);
+  //Load.resume();
   //pros::Task Eject(eject);
   chassis.pid_drive_set(12_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
@@ -429,8 +429,8 @@ void redRight(){
   //deployMolly();
   chassis.pid_turn_set(180_deg, TURN_SPEED);
   chassis.pid_wait_quick();
-  //pros::Task Load(load);
-  Load.resume();
+  pros::Task Load(load);
+  //Load.resume();
   //pros::Task Eject(eject);
   chassis.pid_drive_set(10.5_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
@@ -463,8 +463,8 @@ void blueRight(){
   //deployMolly();
   chassis.pid_turn_set(320_deg, TURN_SPEED);
   chassis.pid_wait_quick();
-  //pros::Task Load(load);
-  Load.resume();
+  pros::Task Load(load);
+  //Load.resume();
   //pros::Task Eject(eject);
   chassis.pid_drive_set(11_in, DRIVE_SPEED, true); //first ring
   chassis.pid_wait_quick();
@@ -514,8 +514,8 @@ void blueLeft(){
   //deployMolly();
   chassis.pid_turn_set(180_deg, TURN_SPEED);
   chassis.pid_wait_quick();
-  //pros::Task Load(load);
-  Load.resume();
+  pros::Task Load(load);
+  //Load.resume();
   //pros::Task Eject(eject);
   chassis.pid_drive_set(10.5_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
@@ -552,8 +552,8 @@ void blueLeft(){
 
 void skillsAuton(){
   chassis.drive_angle_set(90); //Tells IMU what its heading is
-  //pros::Task Load(load);
-  Load.resume();
+  pros::Task Load(load);
+  //Load.resume();
   pros::delay(1000);
   chassis.pid_drive_set(11_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
@@ -630,8 +630,8 @@ void skillsAuton(){
 void skillsAutonNonQuick(){
   //Red right corner
   chassis.drive_angle_set(90); //Tells IMU what its heading is
-  //pros::Task Load(load);
-  Load.resume();
+  pros::Task Load(load);
+  //Load.resume();
   pros::delay(1000);
   chassis.pid_drive_set(11_in, DRIVE_SPEED, true); // line up with grid
   chassis.pid_wait();
@@ -756,8 +756,8 @@ void blueRightTwo(){
   //deployMolly();
   chassis.pid_turn_set(30_deg, TURN_SPEED);
   chassis.pid_wait(); 
-  //pros::Task Load(load);
-  Load.resume();
+  pros::Task Load(load);
+  //Load.resume();
   //pros::Task Eject(eject);
   chassis.pid_drive_set(12_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();

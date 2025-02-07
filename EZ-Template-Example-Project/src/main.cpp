@@ -1,9 +1,5 @@
 #include "main.h"
 
-
-//int pistonCount = 0; // Counts piston uses
-//bool pistonStat = false; //Tracks if piston is enabled
-
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
@@ -27,8 +23,8 @@ ez::Drive chassis(
 void initialize() {
   // Print our branding over your terminal :D
   //ez::ez_template_print();
-  Load.suspend();
-  intake.move(0);
+  //Load.suspend();
+  //intake.move(0);
   pros::delay(500);  // Stop the user from doing anything while legacy ports configure
   pros::screen::print(TEXT_MEDIUM, 1, "owo whats this? a cowode?"); //bella
   pros::screen::print(TEXT_SMALL, 10, "im about to go uwu catgirl");

@@ -118,7 +118,7 @@ inline void load(){
     }
 }
 
-inline pros::Task Load(load); //global declaration
+//inline pros::Task Load(load); //global declaration
 /*inline void deployMolly(){
     bool isDeploying = true;
     molmtr.move(100);
