@@ -27,9 +27,12 @@ ez::Drive chassis(
 void initialize() {
   // Print our branding over your terminal :D
   //ez::ez_template_print();
-
+  Load.suspend();
+  intake.move(0);
   pros::delay(500);  // Stop the user from doing anything while legacy ports configure
-  pros::screen::print(TEXT_MEDIUM, 1, "owo whats this? a cowode?");
+  pros::screen::print(TEXT_MEDIUM, 1, "owo whats this? a cowode?"); //bella
+  pros::screen::print(TEXT_SMALL, 10, "im about to go uwu catgirl");
+  pros::screen::print(TEXT_SMALL, 11, "in this place \n just because im angry - unkle k");
 
   // Configure your chassis controls
   chassis.opcontrol_curve_buttons_toggle(false);  // Enables modifying the controller curve with buttons on the joysticks
@@ -208,7 +211,7 @@ void opcontrol() {
     // Put more user control code here!
     // . . .
       //gelevatorRPM = elevator.get_actual_velocity();
-      //master.print(0,0, "RPM: %d", elevatorRPM);
+      //master.print(0,0, "RPM:IMUScalingTuner%d", elevatorRPM);
 
 
       if (master.get_digital(DIGITAL_Y)){
