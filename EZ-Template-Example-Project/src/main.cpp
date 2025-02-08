@@ -1,4 +1,6 @@
 #include "main.h"
+lv_obj_t* image;
+
 
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
@@ -63,6 +65,12 @@ void initialize() {
   gps1.set_data_rate(10);
   
 
+
+  LV_IMG_DECLARE(Image);
+  image = lv_img_create(lv_scr_act());
+  lv_img_set_src(image, &Image);
+  lv_obj_set_size(image, 480, 272);
+  lv_obj_align(image, LV_ALIGN_CENTER, 0, 0);
 }
 /**
  * Simplifies printing tracker values to the brain screen
@@ -177,7 +185,9 @@ void opcontrol() {
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_HOLD;
   chassis.drive_brake_set(driver_preference_brake);
   ladyBrown.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+  chassis.opcontrol_drive_activebrake_set(2.0);
   //pros::Task IntakeVelocity(intakeVelocity);
+
   while (true) {
     // PID Tuner
     // After you find values that you're happy with, you'll have to set them in auton.cpp
