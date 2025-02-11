@@ -17,7 +17,7 @@
 
 #define GPS_PORT 18 //Currently Not installed
 #define OPTICAL_PORT 4
-#define ladyBrown_PORT -16
+#define ladyBrown_PORT 16
  
 // Your motors, sensors, etc. should go here.  Below are examples
 inline pros::MotorGroup intakeGroup({ loader_Motor, loader_Motor2, elevator_Motor, elevator_Motor2 });

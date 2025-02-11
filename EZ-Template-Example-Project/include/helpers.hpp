@@ -8,8 +8,8 @@ inline const int DRIVE_SPEED = 127; //was 110
 inline const int TURN_SPEED = 115;
 inline const int SWING_SPEED = 40;
 inline const int elevatorRPMFlag = 10; //Threashold for detecting elevator jam //was 100 //was 50
-inline const int blue = 200;
-inline const int red = 30;
+//inline const int blue = 200;
+//inline const int red = 30;
 
 
 //Changing Variables

@@ -60,7 +60,7 @@ void default_constants() {
 
   chassis.pid_angle_behavior_set(ez::shortest);  // Changes the default behavior for turning, this defaults it to the shortest path there
   //chassis.drive_imu_scaler_set(.9139 );
-  chassis.drive_imu_scaler_set(1.005);
+  chassis.drive_imu_scaler_set(1.005); //retune for dif robot weight
 }
 
 void measure_offsets() {
@@ -452,7 +452,7 @@ void redRight(){
 
 void blueRight(){
   chassis.drive_angle_set(60); //Tells IMU what its heading is
-  pros::Task HeadUpdate(headUpdate);
+  //pros::Task HeadUpdate(headUpdate);
   //int curHead;
   //pistonTog();
   //gps1.initialize_full(X_OFFSET, Y_OFFSET, X_INITIAL, Y_INITIAL, HEADING_INITIAL);

@@ -65,12 +65,6 @@ void initialize() {
   gps1.set_data_rate(10);
   
 
-
-  LV_IMG_DECLARE(Image);
-  image = lv_img_create(lv_scr_act());
-  lv_img_set_src(image, &Image);
-  lv_obj_set_size(image, 480, 272);
-  lv_obj_align(image, LV_ALIGN_CENTER, 0, 0);
 }
 /**
  * Simplifies printing tracker values to the brain screen
@@ -180,18 +174,24 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-  chassis.pid_tuner_toggle();
+  //chassis.pid_tuner_toggle();
   // This is preference to what you like to drive on
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_HOLD;
   chassis.drive_brake_set(driver_preference_brake);
   ladyBrown.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   chassis.opcontrol_drive_activebrake_set(2.0);
   //pros::Task IntakeVelocity(intakeVelocity);
+  /*ezScreenTask.suspend();
+  LV_IMG_DECLARE(Image);
+  image = lv_img_create(lv_scr_act());
+  lv_img_set_src(image, &Image);
+  lv_obj_set_size(image, 480, 272);
+  lv_obj_align(image, LV_ALIGN_CENTER, 0, 0);*/
 
   while (true) {
     // PID Tuner
     // After you find values that you're happy with, you'll have to set them in auton.cpp
-    if (!pros::competition::is_connected()) {
+    /*if (!pros::competition::is_connected()) {
       // Enable / Disable PID Tuner
       //  When enabled:
       //  * use A and Y to increment / decrement the constants
@@ -205,7 +205,7 @@ void opcontrol() {
         chassis.drive_brake_set(driver_preference_brake);
       }
       chassis.pid_tuner_iterate();  // Allow PID Tuner to iterate
-    }
+    }*/
 
     //chassis.opcontrol_tank();  // Tank control
      //chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
@@ -247,6 +247,10 @@ void opcontrol() {
       }
       else if (master.get_digital(DIGITAL_DOWN)){
         ladyBrown.move(-70);
+      }
+      else if (master.get_digital(DIGITAL_RIGHT)){
+        ladyBrown.move_relative(200, 800);
+        pros::delay(500);
       }
       else{
         ladyBrown.move(0);
