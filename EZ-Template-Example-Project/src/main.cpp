@@ -60,9 +60,11 @@ void initialize() {
   // Initialize chassis and auton selector
   chassis.initialize();
   ez::as::initialize();
-  master.rumble(".");
+  ladyBrown.tare_position();
+  lbRot_sensor.reset();
+  ladyBrownPID.exit_condition_set(80, 50, 300, 150, 500, 500);
   ladyBrown.set_brake_mode(MOTOR_BRAKE_HOLD);
-  gps1.set_data_rate(10);
+  master.rumble(".");
   
 
 }
@@ -103,6 +105,9 @@ void ez_screen_task() {
           screen_print_tracker(chassis.odom_tracker_right, "r", 5);
           screen_print_tracker(chassis.odom_tracker_back, "b", 6);
           screen_print_tracker(chassis.odom_tracker_front, "f", 7);
+        }
+        if(ez::as::page_blank_is_on(1)){
+          ez::screen_print(std::to_string(lbRot_sensor.get_position()/100), 4);
         }
       }
     }
@@ -176,19 +181,19 @@ void autonomous() {
 void opcontrol() {
   //chassis.pid_tuner_toggle();
   // This is preference to what you like to drive on
-  pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_HOLD;
+  pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_BRAKE;
   chassis.drive_brake_set(driver_preference_brake);
   ladyBrown.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-  chassis.opcontrol_drive_activebrake_set(2.0);
-  //pros::Task IntakeVelocity(intakeVelocity);
-  /*ezScreenTask.suspend();
-  LV_IMG_DECLARE(Image);
+  chassis.opcontrol_drive_activebrake_set(1.0);
+  pros::Task LadyBrown_task(ladyBrown_task);
+  /*LV_IMG_DECLARE(Image);
   image = lv_img_create(lv_scr_act());
   lv_img_set_src(image, &Image);
   lv_obj_set_size(image, 480, 272);
   lv_obj_align(image, LV_ALIGN_CENTER, 0, 0);*/
 
   while (true) {
+    //dig_right = master.get_digital(DIGITAL_RIGHT); //Wraper for making buttons task safe
     // PID Tuner
     // After you find values that you're happy with, you'll have to set them in auton.cpp
     /*if (!pros::competition::is_connected()) {
@@ -220,14 +225,14 @@ void opcontrol() {
       //master.print(0,0, "RPM:IMUScalingTuner%d", elevatorRPM);
 
 
-      if (master.get_digital(DIGITAL_Y)){
+      if (master.get_digital_new_press(DIGITAL_Y)){
         pistonTog();
-        pros::delay(500);
+        //pros::delay(500);
       }
       
-      if (master.get_digital(DIGITAL_X)){
+      if (master.get_digital_new_press(DIGITAL_X)){
         mollyBTog();
-        pros::delay(500);
+        //pros::delay(500);
       }
 
       if (master.get_digital(DIGITAL_L1)){
@@ -241,21 +246,22 @@ void opcontrol() {
       else{
         intakeGroup.move(0);
       }
-
-      if (master.get_digital(DIGITAL_UP)){
+    //if(!is_auto_home){
+      if (master.get_digital(DIGITAL_A)){
+        ladyBrownPID.target_set(14.32);
+        Lady_wait();
+      }
+      else if (master.get_digital(DIGITAL_RIGHT)){
         ladyBrown.move(70);
       }
       else if (master.get_digital(DIGITAL_DOWN)){
         ladyBrown.move(-70);
       }
-      else if (master.get_digital(DIGITAL_RIGHT)){
-        ladyBrown.move_relative(200, 800);
-        pros::delay(500);
-      }
       else{
         ladyBrown.move(0);
         ladyBrown.brake();
       }
+    //}
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }

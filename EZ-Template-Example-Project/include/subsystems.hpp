@@ -14,10 +14,12 @@
 #define elevator_Motor2 13
 #define loader_Motor -14
 #define loader_Motor2 -15
-
-#define GPS_PORT 18 //Currently Not installed
-#define OPTICAL_PORT 4
 #define ladyBrown_PORT 16
+
+//Sensors
+#define GPS_PORT 18 //Currently Not installed
+#define ROTATION_PORT 6
+#define OPTICAL_PORT 4
  
 // Your motors, sensors, etc. should go here.  Below are examples
 inline pros::MotorGroup intakeGroup({ loader_Motor, loader_Motor2, elevator_Motor, elevator_Motor2 });
@@ -30,6 +32,8 @@ inline pros::Motor intake1(loader_Motor);
 inline pros::Motor intake2(loader_Motor2);
 
 inline pros::Motor ladyBrown (ladyBrown_PORT);
+inline pros::Rotation lbRot_sensor(ROTATION_PORT);
+
 //Pistons
 inline pros::adi::DigitalOut piston (goalGrabber_port);
 inline pros::adi::DigitalOut ejecter (goalGrabber_port);
@@ -40,4 +44,14 @@ inline pros::Gps gps1(GPS_PORT); //change values (also not installed)
 inline pros::Optical opitcal1(OPTICAL_PORT); //rgb sensor on elevator
 
 //PID
+inline void set_LadyBrown(int input) { //wraper for motor
+  ladyBrown.move(input);
+}
+
 inline ez::PID ladyBrownPID{0.45, 0, 0, 0, "LadyBrown"};
+
+inline void Lady_wait() {
+  while (ladyBrownPID.exit_condition({ladyBrown}, true) == ez::RUNNING) {
+    pros::delay(ez::util::DELAY_TIME);
+  }
+}

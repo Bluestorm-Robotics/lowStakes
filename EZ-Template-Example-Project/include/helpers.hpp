@@ -20,6 +20,8 @@ inline int elevatorRPM;
 inline bool intakeTog = false;
 inline bool mollyBStat = false; 
 inline bool isJammed = false; //flag for if elevator is jammed (prevents ejecter)
+inline bool is_auto_home = false;
+inline bool dig_right = false;
 
 //this is getting out of hand I need a better solution to this than a billion bool toggles
 
@@ -118,6 +120,20 @@ inline void load(){
     }
 }
 
+
+inline void ladyBrown_task() {
+  pros::delay(2000);  // Set EZ-Template calibrate before this function starts running
+  while (true) {
+    set_LadyBrown(ladyBrownPID.compute(lbRot_sensor.get_angle()/100));
+    /*if (dig_right){
+        is_auto_home = true;
+        ladyBrownPID.target_set(14.32);
+        Lady_wait();
+        is_auto_home = false;
+    }*/
+    pros::delay(ez::util::DELAY_TIME);
+  }
+}
 //inline pros::Task Load(load); //global declaration
 /*inline void deployMolly(){
     bool isDeploying = true;
