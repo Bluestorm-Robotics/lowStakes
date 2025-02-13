@@ -52,7 +52,7 @@ void initialize() {
       Auton("BlueRight\n Blue right corner", blueRight),
       Auton("BlueLeft", blueLeft),
       Auton("Skills Auton", skillsAuton),
-      Auton("Skills Auton\n NON QUICK WAIT", skillsAutonNonQuick),
+      Auton("winPointRed", winPointRed),
       Auton("IMUScale Tuner", IMUScalingTuner),
       //Auton("PID Tuner", measure_offsets),
   });
@@ -61,7 +61,7 @@ void initialize() {
   chassis.initialize();
   ez::as::initialize();
   ladyBrown.tare_position();
-  lbRot_sensor.reset();
+  lbRot_sensor.reset_position();
   ladyBrownPID.exit_condition_set(80, 50, 300, 150, 500, 500);
   ladyBrown.set_brake_mode(MOTOR_BRAKE_HOLD);
   master.rumble(".");
@@ -162,6 +162,7 @@ void autonomous() {
   chassis.drive_sensor_reset();               // Reset drive sensors to 0
   chassis.drive_brake_set(MOTOR_BRAKE_HOLD);  // Set motors to hold.  This helps autonomous consistency
   pistonTog();
+  pros::Task LadyBrown_task(ladyBrown_task);
 
   ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
@@ -183,7 +184,6 @@ void opcontrol() {
   // This is preference to what you like to drive on
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_BRAKE;
   chassis.drive_brake_set(driver_preference_brake);
-  ladyBrown.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   chassis.opcontrol_drive_activebrake_set(1.0);
   pros::Task LadyBrown_task(ladyBrown_task);
   /*LV_IMG_DECLARE(Image);
@@ -193,7 +193,6 @@ void opcontrol() {
   lv_obj_align(image, LV_ALIGN_CENTER, 0, 0);*/
 
   while (true) {
-    //dig_right = master.get_digital(DIGITAL_RIGHT); //Wraper for making buttons task safe
     // PID Tuner
     // After you find values that you're happy with, you'll have to set them in auton.cpp
     /*if (!pros::competition::is_connected()) {
@@ -221,47 +220,25 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
-      //gelevatorRPM = elevator.get_actual_velocity();
-      //master.print(0,0, "RPM:IMUScalingTuner%d", elevatorRPM);
 
-
-      if (master.get_digital_new_press(DIGITAL_Y)){
-        pistonTog();
-        //pros::delay(500);
-      }
+      if (master.get_digital_new_press(DIGITAL_Y)) pistonTog();
       
-      if (master.get_digital_new_press(DIGITAL_X)){
-        mollyBTog();
-        //pros::delay(500);
-      }
+      if (master.get_digital_new_press(DIGITAL_X)) mollyBTog();
 
-      if (master.get_digital(DIGITAL_L1)){
-        intakeGroup.move(127);
-      }
-      else if (master.get_digital(DIGITAL_L2)){
-        //intake.move(0);
-        //elevator.move(-127); 
-        intakeGroup.move(-127);
-      }
-      else{
-        intakeGroup.move(0);
-      }
-    //if(!is_auto_home){
+      if (master.get_digital(DIGITAL_L1))intakeGroup.move(127);
+      else if (master.get_digital(DIGITAL_L2)) intakeGroup.move(-127);
+  
+      else intakeGroup.move(0);
+
       if (master.get_digital(DIGITAL_A)){
         ladyBrownPID.target_set(14.32);
         Lady_wait();
       }
-      else if (master.get_digital(DIGITAL_RIGHT)){
-        ladyBrown.move(70);
-      }
-      else if (master.get_digital(DIGITAL_DOWN)){
-        ladyBrown.move(-70);
-      }
-      else{
-        ladyBrown.move(0);
-        ladyBrown.brake();
-      }
-    //}
+      else if (master.get_digital(DIGITAL_RIGHT)) ladyBrown.move(70);
+  
+      else if (master.get_digital(DIGITAL_DOWN)) ladyBrown.move(-70);
+
+      else ladyBrown.move(0);
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }

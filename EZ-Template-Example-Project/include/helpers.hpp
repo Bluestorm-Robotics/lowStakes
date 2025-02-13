@@ -25,7 +25,7 @@ inline bool dig_right = false;
 
 //this is getting out of hand I need a better solution to this than a billion bool toggles
 
-inline void turnToHead(float deg){ //deg is requested heading (DEPRICATED FUNCTION)
+/*inline void turnToHead(float deg){ //deg is requested heading (DEPRICATED FUNCTION)
     float current = gps1.get_heading(); //Current heading
     float turn = abs(current - deg); // Absolute value of degrees to turn
     if(current > deg){ //If requested heading is less than current heading turn left
@@ -38,7 +38,7 @@ inline void turnToHead(float deg){ //deg is requested heading (DEPRICATED FUNCTI
     /*if (gps1.get_heading() < deg){ //Verification check (not yet implemented)
     
     }*/
-}
+//}
 
 inline void pistonTog(){ //Toggles piston
     pistonStat = !pistonStat; //Toggle switch
@@ -124,13 +124,7 @@ inline void load(){
 inline void ladyBrown_task() {
   pros::delay(2000);  // Set EZ-Template calibrate before this function starts running
   while (true) {
-    set_LadyBrown(ladyBrownPID.compute(lbRot_sensor.get_angle()/100));
-    /*if (dig_right){
-        is_auto_home = true;
-        ladyBrownPID.target_set(14.32);
-        Lady_wait();
-        is_auto_home = false;
-    }*/
+    set_LadyBrown(ladyBrownPID.compute(lbRot_sensor.get_position()/100));
     pros::delay(ez::util::DELAY_TIME);
   }
 }
@@ -167,7 +161,7 @@ inline void intakeVelocity(){
 }
 
 
-inline void turnToIMU(float deg){ //deg is requested heading
+/*inline void turnToIMU(float deg){ //deg is requested heading
     float current = chassis.drive_imu_get(); //Current heading
     float turn = abs(current - deg); // Absoloute value of degrees to turn
     if(current > deg){ //If requested heading is less than current heading turn left
@@ -180,6 +174,6 @@ inline void turnToIMU(float deg){ //deg is requested heading
     /*if (gps1.get_heading() < deg){ //Verification check (not yet implemented)
     
     }*/
-}
+//}
 
 

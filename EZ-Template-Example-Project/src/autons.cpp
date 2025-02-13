@@ -551,83 +551,6 @@ void blueLeft(){
 }
 
 void skillsAuton(){
-  chassis.drive_angle_set(90); //Tells IMU what its heading is
-  pros::Task Load(load);
-  //Load.resume();
-  pros::delay(1000);
-  chassis.pid_drive_set(11_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_turn_set(0_deg, TURN_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_drive_set(-20_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  pistonTog();
-  pros::delay(500);
-  chassis.pid_drive_set(3_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_turn_set(90_deg, TURN_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_drive_set(21_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  pros::delay(500);
-  chassis.pid_turn_set(150_deg, TURN_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_drive_set(25_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_drive_set(-7_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_turn_set(270_deg, TURN_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_drive_set(12_in, TURN_SPEED, true);
-  chassis.pid_wait_quick();
-  pros::delay(500);
-  chassis.pid_drive_set(25_in, TURN_SPEED, true);
-  chassis.pid_wait_quick();
-  pros::delay(500);
-  chassis.pid_turn_set(205_deg, TURN_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_drive_set(-9_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_turn_set(180_deg, TURN_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_drive_set(13_in, DRIVE_SPEED - 20, true);
-  chassis.pid_wait_quick();
-  pros::delay(500);
-  chassis.pid_turn_set(55_deg, TURN_SPEED, true);
-  chassis.pid_wait_quick();
-  pros::delay(1000);
-  Load.suspend();
-  intakeGroup.move(0);
-  pros::delay(500);
-  pistonTog();
-  chassis.pid_drive_set(-20_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  pros::delay(500);
-  chassis.pid_drive_set(1_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_drive_set(-2_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_drive_set(9_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_turn_set(180_deg, TURN_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_drive_set(-24_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_drive_set(-42_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_turn_set(180_deg, TURN_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_drive_set(-12_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  pistonTog();
-  pros::delay(500);
-  chassis.pid_turn_set(90_deg, TURN_SPEED, true);
-  chassis.pid_wait_quick();
-  Load.resume();
-  chassis.pid_drive_set(1_ft, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-}
-void skillsAutonNonQuick(){
   //Red right corner
   chassis.drive_angle_set(90); //Tells IMU what its heading is
   pros::Task Load(load);
@@ -736,6 +659,52 @@ void skillsAutonNonQuick(){
   chassis.pid_drive_set(10_in, DRIVE_SPEED, true);
   chassis.pid_wait();
 }
+/*void winPointRed(){
+  chassis.drive_angle_set(180);
+  chassis.pid_drive_set(.5_ft, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  ladyBrown.move(0);
+  //ladyBrownPID.target_set(14.32);
+  //Lady_wait();
+  //elevator.move(127);
+  chassis.pid_turn_set(235, TURN_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(3_in, DRIVE_SPEED, true);
+  ladyBrownPID.target_set(200);
+  //elevator.move(0);
+  Lady_wait();
+  pros::delay(500);
+  chassis.pid_drive_set(-3_in, DRIVE_SPEED, true);
+}*/
+void winPointRed(){
+  //chassis.odom_theta_flip();
+  //chassis.odom_theta_direction_get();
+  chassis.drive_angle_set(270); //Tells IMU what its heading is
+  pros::Task HeadUpdate(headUpdate);
+  //int curHead;
+  //pistonTog();
+  //gps1.initialize_full(X_OFFSET, Y_OFFSET, X_INITIAL, Y_INITIAL, HEADING_INITIAL);
+  chassis.pid_drive_set(-2.4_ft, DRIVE_SPEED-20, true);
+  chassis.pid_wait_quick();
+  pros::delay(100);
+  pistonTog();
+  //deployMolly();
+  chassis.pid_turn_set(180_deg, TURN_SPEED);
+  chassis.pid_wait_quick();
+  pros::Task Load(load);
+  //Load.resume();
+  //pros::Task Eject(eject);
+  chassis.pid_drive_set(10.5_in, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+  pros::delay(1000);
+  chassis.pid_drive_set(-24_in, DRIVE_SPEED, true);
+  chassis.pid_wait_quick();
+
+  Load.remove();
+  intakeGroup.move(0);
+}
+
+
 void IMUScalingTuner(){
   //chassis.drive_angle_set(0);
   chassis.pid_turn_set(3600_deg, 110, ez::raw);

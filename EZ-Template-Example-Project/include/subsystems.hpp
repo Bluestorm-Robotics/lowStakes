@@ -48,7 +48,13 @@ inline void set_LadyBrown(int input) { //wraper for motor
   ladyBrown.move(input);
 }
 
-inline ez::PID ladyBrownPID{0.45, 0, 0, 0, "LadyBrown"};
+//inline ez::PID ladyBrownPID{0.45, 0, 0, 0, "LadyBrown"};
+/*
+p kP
+i kI
+d kD
+p_start_i i will start when error is within this*/
+inline ez::PID ladyBrownPID{6, 0, 40, 0, "LadyBrown"};
 
 inline void Lady_wait() {
   while (ladyBrownPID.exit_condition({ladyBrown}, true) == ez::RUNNING) {
