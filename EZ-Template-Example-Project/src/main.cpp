@@ -213,7 +213,7 @@ void opcontrol() {
 
     //chassis.opcontrol_tank();  // Tank control
      //chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
-     chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcademotor_group.set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
+    //chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcademotor_group.set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
     // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
 
@@ -230,7 +230,7 @@ void opcontrol() {
   
       else intakeGroup.move(0);
 
-      if (master.get_digital(DIGITAL_A)){
+      if (master.get_digital_new_press(DIGITAL_A)){
         ladyBrownPID.target_set(14.32);
         Lady_wait();
       }
