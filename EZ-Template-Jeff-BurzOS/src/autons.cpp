@@ -60,7 +60,7 @@ void default_constants() {
 
   chassis.pid_angle_behavior_set(ez::shortest);  // Changes the default behavior for turning, this defaults it to the shortest path there
   //chassis.drive_imu_scaler_set(.9139 );
-  chassis.drive_imu_scaler_set(1.005); //retune for dif robot weight
+  chassis.drive_imu_scaler_set(1.001); //retune for dif robot weightA
 }
 
 void measure_offsets() {
@@ -377,26 +377,26 @@ void redLeft(){
   chassis.pid_drive_set(-29_in, DRIVE_SPEED-20, true);
   chassis.pid_wait_quick();
   pros::delay(100);
-  pistonTog();
+  pistonTog(); //pickup mogo
   //deployMolly();
   chassis.pid_turn_set(30_deg, TURN_SPEED);
   chassis.pid_wait(); 
-  pros::Task Load(load);
+  pros::Task Load(load); //load 1st ring
   //Load.resume();
   //pros::Task Eject(eject);
-  chassis.pid_drive_set(12_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(12_in, DRIVE_SPEED, true); //lload 2nd ring
   chassis.pid_wait_quick();
   pros::delay(800);
   chassis.pid_drive_set(-12_in, DRIVE_SPEED, true);
   chassis.pid_wait_quick();
   chassis.pid_turn_set(335_deg, TURN_SPEED);
   chassis.pid_wait_quick();
-  chassis.pid_drive_set(14_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(14_in, DRIVE_SPEED, true); //load 3rd ring
   chassis.pid_wait_quick();
   pros::delay(800);
   chassis.pid_turn_set(40_deg, TURN_SPEED);
   chassis.pid_wait_quick();
-  chassis.pid_drive_set(11_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(11_in, DRIVE_SPEED, true); //load 4th ring
   chassis.pid_wait_quick();
   pros::delay(800);
   chassis.pid_drive_set(-13_in, DRIVE_SPEED, true);
@@ -425,17 +425,17 @@ void redRight(){
   chassis.pid_drive_set(-2.4_ft, DRIVE_SPEED-20, true);
   chassis.pid_wait_quick();
   pros::delay(100);
-  pistonTog();
+  pistonTog(); //clamp mogo
   //deployMolly();
   chassis.pid_turn_set(180_deg, TURN_SPEED);
   chassis.pid_wait_quick();
-  pros::Task Load(load);
+  pros::Task Load(load); //load matchload
   //Load.resume();
   //pros::Task Eject(eject);
-  chassis.pid_drive_set(10.5_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(10.5_in, DRIVE_SPEED, true); //load 2nd ring
   chassis.pid_wait_quick();
   pros::delay(1000);
-  chassis.pid_drive_set(-24_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(-24_in, DRIVE_SPEED, true); //back into highsteak
   chassis.pid_wait_quick();
   /*chassis.pid_turn_set(270_deg, TURN_SPEED);
   chassis.pid_wait_quick();
@@ -459,14 +459,14 @@ void blueRight(){
   chassis.pid_drive_set(-29_in, DRIVE_SPEED-20, true);
   chassis.pid_wait_quick();
   pros::delay(100);
-  pistonTog();
+  pistonTog(); //clamp mogo
   //deployMolly();
   chassis.pid_turn_set(320_deg, TURN_SPEED);
   chassis.pid_wait_quick();
-  pros::Task Load(load);
+  pros::Task Load(load); //load matchload
   //Load.resume();
   //pros::Task Eject(eject);
-  chassis.pid_drive_set(11_in, DRIVE_SPEED, true); //first ring
+  chassis.pid_drive_set(11_in, DRIVE_SPEED, true); //2nd ring
   chassis.pid_wait_quick();
   //mollyBTog();
   pros::delay(800);
@@ -475,12 +475,12 @@ void blueRight(){
   //mollyBTog();
   chassis.pid_turn_set(0_deg, TURN_SPEED);
   chassis.pid_wait_quick();
-  chassis.pid_drive_set(13_in, DRIVE_SPEED, true);//Second ring
+  chassis.pid_drive_set(13_in, DRIVE_SPEED, true);//third ring
   chassis.pid_wait_quick();
   pros::delay(800);
   chassis.pid_turn_set(305_deg, TURN_SPEED);
   chassis.pid_wait_quick();
-  chassis.pid_drive_set(9_in, DRIVE_SPEED, true); //3rd ring
+  chassis.pid_drive_set(9_in, DRIVE_SPEED, true); //fourth ring
   chassis.pid_wait_quick();
   pros::delay(800);
   chassis.pid_drive_set(-13_in, DRIVE_SPEED, true);
@@ -491,7 +491,7 @@ void blueRight(){
   chassis.pid_wait_quick();
   Load.remove();
   intakeGroup.move(0);
-  chassis.pid_drive_set(-24_in, 127, true);
+  chassis.pid_drive_set(-24_in, 127, true); //back into highsteak
   chassis.pid_wait_quick();
   /*chassis.pid_turn_set(null_deg, TURN_SPEED);
   chassis,pid_wait();
@@ -510,14 +510,14 @@ void blueLeft(){
   chassis.pid_drive_set(-2.4_ft, DRIVE_SPEED-20, true);
   chassis.pid_wait_quick();
   pros::delay(100);
-  pistonTog();
+  pistonTog(); //pickup mogo
   //deployMolly();
   chassis.pid_turn_set(180_deg, TURN_SPEED);
   chassis.pid_wait_quick();
-  pros::Task Load(load);
+  pros::Task Load(load); //load matchload
   //Load.resume();
   //pros::Task Eject(eject);
-  chassis.pid_drive_set(10.5_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(10.5_in, DRIVE_SPEED, true); //2nd ring
   chassis.pid_wait_quick();
   pros::delay(1000);
   chassis.pid_drive_set(-10.5_in, DRIVE_SPEED, true);
@@ -529,7 +529,7 @@ void blueLeft(){
   pros::delay(1000);
   chassis.pid_turn_set(180_deg, TURN_SPEED);
   chassis.pid_wait_quick();
-  chassis.pid_drive_set(-24_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(-24_in, DRIVE_SPEED, true); //hit highstakes
   chassis.pid_wait_quick();
   Load.remove();
   intakeGroup.move(0);
@@ -556,7 +556,7 @@ void skillsAuton(){
   pros::Task Load(load);
   //Load.resume();
   pros::delay(1000);
-  chassis.pid_drive_set(11_in, DRIVE_SPEED, true); // line up with grid
+  chassis.pid_drive_set(9_in, DRIVE_SPEED, true); // line up with grid
   chassis.pid_wait();
   chassis.pid_turn_set(0_deg, TURN_SPEED, true);  // turn with back to right stake
   chassis.pid_wait();
@@ -573,9 +573,9 @@ void skillsAuton(){
   pros::delay(500);
   chassis.pid_turn_set(150_deg, TURN_SPEED, true);
   chassis.pid_wait();
-  chassis.pid_drive_set(25_in, DRIVE_SPEED, true); // pick up second ring
+  chassis.pid_drive_set(26_in, DRIVE_SPEED, true); // pick up second ring
   chassis.pid_wait();
-  chassis.pid_drive_set(-6_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(-7_in, DRIVE_SPEED, true);
   chassis.pid_wait();
   chassis.pid_turn_set(270_deg, TURN_SPEED, true);
   chassis.pid_wait();

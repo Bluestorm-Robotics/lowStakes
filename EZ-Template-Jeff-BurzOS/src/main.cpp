@@ -81,6 +81,10 @@ void screen_print_tracker(ez::tracking_wheel *tracker, std::string name, int lin
   ez::screen_print(tracker_value + tracker_width, line);  // Print final tracker text
 }
 
+/*void tempFar(int index) {
+  return std::to_string(32 + (1.8 * chassis.left_motors[index].get_temperature()));
+}*/
+
 /**
  * Ez screen task
  * Adding new pages here will let you view them during user control or autonomous
@@ -108,6 +112,15 @@ void ez_screen_task() {
         }
         if(ez::as::page_blank_is_on(1)){
           ez::screen_print(std::to_string(lbRot_sensor.get_position()/100), 4);
+        }
+        if(ez::as::page_blank_is_on(2)){
+           ez::screen_print("FrontLeft: " + std::to_string(chassis.left_motors[0].get_temperature()) + 
+                            "\n BackLeft: " + std::to_string(chassis.left_motors[1].get_temperature()) +
+                            "\n FrontRight: " + std::to_string(chassis.right_motors[0].get_temperature()) +
+                            "\n BackRight: " + std::to_string(chassis.right_motors[1].get_temperature()),
+                          1);
+          
+          
         }
       }
     }
@@ -195,7 +208,7 @@ void opcontrol() {
   while (true) {
     // PID Tuner
     // After you find values that you're happy with, you'll have to set them in auton.cpp
-    /*if (!pros::competition::is_connected()) {
+    if (!pros::competition::is_connected()) {
       // Enable / Disable PID Tuner
       //  When enabled:
       //  * use A and Y to increment / decrement the constants
@@ -209,11 +222,11 @@ void opcontrol() {
         chassis.drive_brake_set(driver_preference_brake);
       }
       chassis.pid_tuner_iterate();  // Allow PID Tuner to iterate
-    }*/
+    }
 
     //chassis.opcontrol_tank();  // Tank control
      //chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
-    //chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcademotor_group.set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
+    chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcademotor_group.set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
     // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
 
@@ -226,17 +239,18 @@ void opcontrol() {
       if (master.get_digital_new_press(DIGITAL_X)) mollyBTog();
 
       if (master.get_digital(DIGITAL_L1))intakeGroup.move(127);
+
       else if (master.get_digital(DIGITAL_L2)) intakeGroup.move(-127);
   
       else intakeGroup.move(0);
 
       if (master.get_digital_new_press(DIGITAL_A)){
-        ladyBrownPID.target_set(14.32);
+        ladyBrownPID.target_set(15); //was 14.32
         Lady_wait();
       }
-      else if (master.get_digital(DIGITAL_RIGHT)) ladyBrown.move(70);
+      else if (master.get_digital(DIGITAL_R1)) ladyBrown.move(70);
   
-      else if (master.get_digital(DIGITAL_DOWN)) ladyBrown.move(-70);
+      else if (master.get_digital(DIGITAL_R2)) ladyBrown.move(-70);
 
       else ladyBrown.move(0);
 

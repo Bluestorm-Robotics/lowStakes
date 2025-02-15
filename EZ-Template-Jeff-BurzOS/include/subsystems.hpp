@@ -54,7 +54,8 @@ p kP
 i kI
 d kD
 p_start_i i will start when error is within this*/
-inline ez::PID ladyBrownPID{7.5, 0, 50, 0, "LadyBrown"};
+//inline ez::PID ladyBrownPID{7.5, 0, 50, 0, "LadyBrown"};
+inline ez::PID ladyBrownPID{8, 0, 80, 0, "LadyBrown"};
 
 inline void Lady_wait() {
   while (ladyBrownPID.exit_condition({ladyBrown}, true) == ez::RUNNING) {
