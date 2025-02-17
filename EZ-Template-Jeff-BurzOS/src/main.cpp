@@ -52,8 +52,8 @@ void initialize() {
       Auton("BlueRight\n Blue right corner", blueRight),
       Auton("BlueLeft", blueLeft),
       Auton("Skills Auton", skillsAuton),
-      Auton("winPointRed", winPointRed),
-      Auton("IMUScale Tuner", IMUScalingTuner),
+      //Auton("winPointRed", winPointRed),
+      //Auton("IMUScale Tuner", IMUScalingTuner),
       //Auton("PID Tuner", measure_offsets),
   });
 
@@ -110,17 +110,23 @@ void ez_screen_task() {
           screen_print_tracker(chassis.odom_tracker_back, "b", 6);
           screen_print_tracker(chassis.odom_tracker_front, "f", 7);
         }
-        if(ez::as::page_blank_is_on(1)){
-          ez::screen_print(std::to_string(lbRot_sensor.get_position()/100), 4);
+        if(ez::as::page_blank_is_on(1)){ //Temps screen
+           ez::screen_print("FrontLeft: " + std::to_string(chassis.left_motors[0].get_temperature()) + " *C" + //The number designation is the array value for chassis config (0 = first motor declared, 1 = 2nd motor, etc)
+                            "\n BackLeft: " + std::to_string(chassis.left_motors[1].get_temperature()) + " *C" +
+                            "\n FrontRight: " + std::to_string(chassis.right_motors[0].get_temperature()) + " *C" +
+                            "\n BackRight: " + std::to_string(chassis.right_motors[1].get_temperature()) + " *C" +
+                            "\n LadyBrown: " + std::to_string(ladyBrown.get_temperature()) + " *C" +
+                            "\n Intake2: " + std::to_string(intake2.get_temperature()) + " *C" +
+                            "\n Elevator1: " + std::to_string(elevatorLeft.get_temperature()) + " *C",
+                          1);
+                      // Temperature of a Motor
+            // Level 1 - Temp greater than 55 deg C or 131 deg F - 50% Power
+            // Level 2 - Temp greater than 60 deg C or 140 deg F - 25% Power - Less than 25% power is useless on a comp robot
+            // Level 3 - Temp greater than 65 deg C or 149 deg F - 12.5% Power
+            // Level 4 - Temp greater than 70 deg C or 158 deg F - 0% Power
         }
         if(ez::as::page_blank_is_on(2)){
-           ez::screen_print("FrontLeft: " + std::to_string(chassis.left_motors[0].get_temperature()) + 
-                            "\n BackLeft: " + std::to_string(chassis.left_motors[1].get_temperature()) +
-                            "\n FrontRight: " + std::to_string(chassis.right_motors[0].get_temperature()) +
-                            "\n BackRight: " + std::to_string(chassis.right_motors[1].get_temperature()),
-                          1);
-          
-          
+          ez::screen_print(std::to_string(lbRot_sensor.get_position()/100), 4);
         }
       }
     }
@@ -175,7 +181,7 @@ void autonomous() {
   chassis.drive_sensor_reset();               // Reset drive sensors to 0
   chassis.drive_brake_set(MOTOR_BRAKE_HOLD);  // Set motors to hold.  This helps autonomous consistency
   pistonTog();
-  pros::Task LadyBrown_task(ladyBrown_task);
+  //pros::Task LadyBrown_task(ladyBrown_task);
 
   ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
@@ -198,7 +204,7 @@ void opcontrol() {
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_BRAKE;
   chassis.drive_brake_set(driver_preference_brake);
   chassis.opcontrol_drive_activebrake_set(1.0);
-  pros::Task LadyBrown_task(ladyBrown_task);
+  //pros::Task LadyBrown_task(ladyBrown_task);
   /*LV_IMG_DECLARE(Image);
   image = lv_img_create(lv_scr_act());
   lv_img_set_src(image, &Image);
@@ -244,11 +250,12 @@ void opcontrol() {
   
       else intakeGroup.move(0);
 
-      if (master.get_digital_new_press(DIGITAL_A)){
+      /*if (master.get_digital_new_press(DIGITAL_A)){
         ladyBrownPID.target_set(15); //was 14.32
         Lady_wait();
-      }
-      else if (master.get_digital(DIGITAL_R1)) ladyBrown.move(70);
+      }*/
+      //else if (master.get_digital(DIGITAL_R1)) ladyBrown.move(70);
+      if (master.get_digital(DIGITAL_R1)) ladyBrown.move(70);
   
       else if (master.get_digital(DIGITAL_R2)) ladyBrown.move(-70);
 

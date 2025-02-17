@@ -424,7 +424,7 @@
       }
     },
     "upload_options": {
-      "after": "screen",
+      "after": "run",
       "description": "SomethingNew but with EZ template",
       "icon": "planet",
       "slot": 1
