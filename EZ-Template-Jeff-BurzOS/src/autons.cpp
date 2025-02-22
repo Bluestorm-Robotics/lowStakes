@@ -60,7 +60,8 @@ void default_constants() {
 
   chassis.pid_angle_behavior_set(ez::shortest);  // Changes the default behavior for turning, this defaults it to the shortest path there
   //chassis.drive_imu_scaler_set(.9139 );
-  chassis.drive_imu_scaler_set(1.001); //retune for dif robot weightA
+  //chassis.drive_imu_scaler_set(1.001); //retune for dif robot weightA
+  chassis.drive_imu_scaler_set(1.020158); //increase if overshoots (wack)
 }
 
 void measure_offsets() {
@@ -457,42 +458,42 @@ void blueRight(){
   //pistonTog();
   //gps1.initialize_full(X_OFFSET, Y_OFFSET, X_INITIAL, Y_INITIAL, HEADING_INITIAL);
   chassis.pid_drive_set(-29_in, DRIVE_SPEED-20, true);
-  chassis.pid_wait_quick();
+  chassis.pid_wait();
   pros::delay(100);
   pistonTog(); //clamp mogo
   //deployMolly();
-  chassis.pid_turn_set(320_deg, TURN_SPEED);
-  chassis.pid_wait_quick();
+  chassis.pid_turn_set(320_deg, TURN_SPEED, true);
+  chassis.pid_wait();
   pros::Task Load(load); //load matchload
   //Load.resume();
   //pros::Task Eject(eject);
   chassis.pid_drive_set(11_in, DRIVE_SPEED, true); //2nd ring
-  chassis.pid_wait_quick();
+  chassis.pid_wait();
   //mollyBTog();
   pros::delay(800);
   chassis.pid_drive_set(-11_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
+  chassis.pid_wait();
   //mollyBTog();
-  chassis.pid_turn_set(0_deg, TURN_SPEED);
-  chassis.pid_wait_quick();
+  chassis.pid_turn_set(0_deg, TURN_SPEED, true);
+  chassis.pid_wait();
   chassis.pid_drive_set(13_in, DRIVE_SPEED, true);//third ring
-  chassis.pid_wait_quick();
+  chassis.pid_wait();
   pros::delay(800);
   chassis.pid_turn_set(305_deg, TURN_SPEED);
-  chassis.pid_wait_quick();
+  chassis.pid_wait();
   chassis.pid_drive_set(9_in, DRIVE_SPEED, true); //fourth ring
-  chassis.pid_wait_quick();
+  chassis.pid_wait();
   pros::delay(800);
   chassis.pid_drive_set(-13_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
+  chassis.pid_wait();
   Load.remove();
   //intakeGroup.move(0);
-  chassis.pid_turn_set(0_deg, TURN_SPEED);
-  chassis.pid_wait_quick();
+  chassis.pid_turn_set(0_deg, TURN_SPEED, true);
+  chassis.pid_wait();
   Load.remove();
   intakeGroup.move(0);
   chassis.pid_drive_set(-24_in, 127, true); //back into highsteak
-  chassis.pid_wait_quick();
+  chassis.pid_wait();
   /*chassis.pid_turn_set(null_deg, TURN_SPEED);
   chassis,pid_wait();
   chassis.pid_drive_set(null_in, DRIVE_SPEED, true);
@@ -627,7 +628,7 @@ void skillsAuton(){
   chassis.pid_wait();
   chassis.pid_turn_set(270_deg, TURN_SPEED, true);
   chassis.pid_wait();
-  chassis.pid_drive_set(38_in, TURN_SPEED, true); //pick up third ring
+  chassis.pid_drive_set(36_in, TURN_SPEED, true); //pick up third ring
   chassis.pid_wait();
   pros::delay(500);
   chassis.pid_turn_set(335_deg, TURN_SPEED, true);
@@ -677,37 +678,59 @@ void skillsAuton(){
   chassis.pid_drive_set(-3_in, DRIVE_SPEED, true);
 }*/
 void winPointRed(){
-  //chassis.odom_theta_flip();
-  //chassis.odom_theta_direction_get();
   chassis.drive_angle_set(270); //Tells IMU what its heading is
-  pros::Task HeadUpdate(headUpdate);
-  //int curHead;
-  //pistonTog();
-  //gps1.initialize_full(X_OFFSET, Y_OFFSET, X_INITIAL, Y_INITIAL, HEADING_INITIAL);
+  //pros::Task HeadUpdate(headUpdate);
   chassis.pid_drive_set(-2.4_ft, DRIVE_SPEED-20, true);
-  chassis.pid_wait_quick();
+  chassis.pid_wait();
   pros::delay(100);
-  pistonTog();
+  pistonTog(); //pickup mogo
   //deployMolly();
-  chassis.pid_turn_set(180_deg, TURN_SPEED);
-  chassis.pid_wait_quick();
-  pros::Task Load(load);
+  chassis.pid_turn_set(180_deg, TURN_SPEED, true);
+  chassis.pid_wait();
+  pros::Task Load(load); //load matchload
   //Load.resume();
   //pros::Task Eject(eject);
-  chassis.pid_drive_set(10.5_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  pros::delay(1000);
-  chassis.pid_drive_set(-24_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-
-  Load.remove();
+  chassis.pid_drive_set(11_in, DRIVE_SPEED, true); //load 2nd goal
+  chassis.pid_wait();
+  pros::delay(800);
+  chassis.pid_drive_set(-14.5_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  pros::delay(500);
+  pistonTog(); //drop mogo at 
+  Load.suspend();
   intakeGroup.move(0);
+  chassis.pid_drive_set(5_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(120_deg, TURN_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(10_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  mollyBTog(); //drag mid mogo
+  pros::delay(500);
+  chassis.pid_drive_set(-10_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  mollyBTog();
+  chassis.pid_turn_set(30_deg, TURN_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-4_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(300_deg, TURN_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-7_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  pistonTog(); //pickup 2nd mogo
+
+}
+
+void winPointBlue(){
+  chassis.odom_theta_flip();
+  chassis.odom_x_flip();
+  winPointRed();
 }
 
 
 void IMUScalingTuner(){
-  //chassis.drive_angle_set(0);
-  chassis.pid_turn_set(3600_deg, 110, ez::raw);
+  chassis.pid_turn_set(3600_deg, TURN_SPEED, ez::raw);
   chassis.pid_wait();
 }
 

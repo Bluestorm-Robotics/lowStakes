@@ -11,6 +11,7 @@ void redLeft(); //actual auton test
 void skillsAuton();
 void IMUScalingTuner();
 void winPointRed();
+void winPointBlue();
 void drive_example();
 void turn_example();
 void drive_and_turn();

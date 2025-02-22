@@ -13,7 +13,7 @@ ez::Drive chassis(
     {-1, -2},     // Left Chassis Ports (negative port will reverse it!)
     {11, 12},  //  pros::screen::print(TEXT_MEDIUM, 3, "owo whats this? a cowode?"); Right Chassis Ports (negative port will reverse it!)
 
-    7,      // IMU Port
+    8,      // IMU Port
     3.25,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     200);   // Wheel RPM
 /**
@@ -22,6 +22,8 @@ ez::Drive chassis(
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
+
+ ez::Piston ladyPiston('D', false);
 void initialize() {
   // Print our branding over your terminal :D
   //ez::ez_template_print();
@@ -52,8 +54,11 @@ void initialize() {
       Auton("BlueRight\n Blue right corner", blueRight),
       Auton("BlueLeft", blueLeft),
       Auton("Skills Auton", skillsAuton),
-      //Auton("winPointRed", winPointRed),
+      Auton("red_goalRush", winPointRed),
+      Auton("blue_goalRush\n flipped red_goalrush", winPointBlue),
       //Auton("IMUScale Tuner", IMUScalingTuner),
+      //Auton("drive_example", drive_example),
+      //Auton("turn_example", turn_example),
       //Auton("PID Tuner", measure_offsets),
   });
 
@@ -64,7 +69,7 @@ void initialize() {
   lbRot_sensor.reset_position();
   ladyBrownPID.exit_condition_set(80, 50, 300, 150, 500, 500);
   ladyBrown.set_brake_mode(MOTOR_BRAKE_HOLD);
-  master.rumble(".");
+  master.rumble(chassis.drive_imu_calibrated() ? "." : "---");
   
 
 }
@@ -200,6 +205,7 @@ void autonomous() {
  */
 void opcontrol() {
   //chassis.pid_tuner_toggle();
+  //chassis.pid_tuner_full_enable(true);  // Enable full PID Tuner
   // This is preference to what you like to drive on
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_BRAKE;
   chassis.drive_brake_set(driver_preference_brake);
@@ -220,7 +226,7 @@ void opcontrol() {
       //  * use A and Y to increment / decrement the constants
       //  * use the arrow keys to navigate the constants
       if (master.get_digital_new_press(DIGITAL_LEFT)){
-        chassis.pid_tuner_toggle();
+        //chassis.pid_tuner_toggle();
       }
       // Trigger the selected autonomous routine
       if (master.get_digital(DIGITAL_B) && master.get_digital(DIGITAL_DOWN)) {
@@ -239,6 +245,7 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
+      ladyPiston.button_toggle(master.get_digital(DIGITAL_A));
 
       if (master.get_digital_new_press(DIGITAL_Y)) pistonTog();
       
