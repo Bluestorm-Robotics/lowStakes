@@ -61,7 +61,8 @@ void default_constants() {
   chassis.pid_angle_behavior_set(ez::shortest);  // Changes the default behavior for turning, this defaults it to the shortest path there
   //chassis.drive_imu_scaler_set(.9139 );
   //chassis.drive_imu_scaler_set(1.001); //retune for dif robot weightA
-  chassis.drive_imu_scaler_set(1.020158); //increase if overshoots (wack)
+  //chassis.drive_imu_scaler_set(1.020); //increase if overshoots (wack)
+  chassis.drive_imu_scaler_set(1.0115);
 }
 
 void measure_offsets() {
@@ -557,7 +558,7 @@ void skillsAuton(){
   pros::Task Load(load);
   //Load.resume();
   pros::delay(1000);
-  chassis.pid_drive_set(9_in, DRIVE_SPEED, true); // line up with grid
+  chassis.pid_drive_set(11_in, DRIVE_SPEED, true); // line up with grid
   chassis.pid_wait();
   chassis.pid_turn_set(0_deg, TURN_SPEED, true);  // turn with back to right stake
   chassis.pid_wait();
@@ -580,7 +581,9 @@ void skillsAuton(){
   chassis.pid_wait();
   chassis.pid_turn_set(270_deg, TURN_SPEED, true);
   chassis.pid_wait();
-  chassis.pid_drive_set(38_in, TURN_SPEED, true); //pick up third ring
+  chassis.pid_drive_set(38_in, TURN_SPEED, true); //pick up third ring //possibly add slower speed when approaching rigns?
+  chassis.pid_wait_until(16_in);
+  chassis.pid_speed_max_set(DRIVE_SPEED-80);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
   chassis.pid_wait();
   pros::delay(500);
   chassis.pid_turn_set(205_deg, TURN_SPEED, true);
@@ -602,12 +605,12 @@ void skillsAuton(){
   chassis.pid_drive_set(-9_in, DRIVE_SPEED, true); //back into corner
   chassis.pid_wait();
   pros::delay(500);
-  chassis.pid_drive_set(3_in, DRIVE_SPEED, true);
+  /*chassis.pid_drive_set(3_in, DRIVE_SPEED, true);
   chassis.pid_wait();
   chassis.pid_drive_set(-2_in, DRIVE_SPEED, true); //wiggle goal off
-  chassis.pid_wait();
+  chassis.pid_wait();*/
   elevator.move_relative(-100, 50);
-  chassis.pid_drive_set(11_in, DRIVE_SPEED, true); //exit corner
+  chassis.pid_drive_set(9_in, DRIVE_SPEED, true); //exit corner
   chassis.pid_wait();
   chassis.pid_turn_set(180_deg, TURN_SPEED, true);
   chassis.pid_wait();
@@ -629,6 +632,9 @@ void skillsAuton(){
   chassis.pid_turn_set(270_deg, TURN_SPEED, true);
   chassis.pid_wait();
   chassis.pid_drive_set(36_in, TURN_SPEED, true); //pick up third ring
+  chassis.pid_wait_until(16_in);
+  chassis.pid_speed_max_set(DRIVE_SPEED-80);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
+  chassis.pid_wait();
   chassis.pid_wait();
   pros::delay(500);
   chassis.pid_turn_set(335_deg, TURN_SPEED, true);
@@ -660,23 +666,137 @@ void skillsAuton(){
   chassis.pid_drive_set(10_in, DRIVE_SPEED, true);
   chassis.pid_wait();
 }
-/*void winPointRed(){
-  chassis.drive_angle_set(180);
-  chassis.pid_drive_set(.5_ft, DRIVE_SPEED, true);
+
+void newSkillsAuton(){
+  ez::Piston ladyPiston('D', false);
+  //Red right corner
+  chassis.drive_angle_set(90); //Tells IMU what its heading is
+  pros::Task Load(load);
+  //Load.resume();
+  pros::delay(1000);
+  chassis.pid_drive_set(11_in, DRIVE_SPEED, true); // line up with grid
+  chassis.pid_wait();
+  chassis.pid_turn_set(0_deg, TURN_SPEED, true);  // turn with back to right stake
+  chassis.pid_wait();
+  chassis.pid_drive_set(-20_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  pistonTog(); // grab right stake
+  pros::delay(500);
+  chassis.pid_drive_set(3_in, DRIVE_SPEED, true); // line up with grid
+  chassis.pid_wait();
+  chassis.pid_turn_set(90_deg, TURN_SPEED, true); // turn 
+  chassis.pid_wait();
+  chassis.pid_drive_set(21_in, DRIVE_SPEED, true); // pick up first ring
+  chassis.pid_wait();
+  pros::delay(500);
+  chassis.pid_turn_set(150_deg, TURN_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(28_in, DRIVE_SPEED, true); // pick up second ring
+  chassis.pid_wait_until(20_in);
+  ladyPiston.set(true);
+  chassis.pid_wait();
+  pros::delay(1000);
+  Load.suspend();
+  intakeGroup.move(0);
+  chassis.pid_drive_set(4_in, DRIVE_SPEED, true); // pick up second ring
+  chassis.pid_wait();
+  chassis.pid_turn_set(180_deg, TURN_SPEED, true);
+  chassis.pid_wait();
+  ladyBrown.move(127);
+  pros::delay(800);
+  chassis.pid_drive_set(-7_in, DRIVE_SPEED, true);
+  ladyPiston.set(false);
+  ladyBrown.move(-127);
   chassis.pid_wait();
   ladyBrown.move(0);
-  //ladyBrownPID.target_set(14.32);
-  //Lady_wait();
-  //elevator.move(127);
-  chassis.pid_turn_set(235, TURN_SPEED, true);
+  Load.resume();
+  chassis.pid_turn_set(270_deg, TURN_SPEED, true);
   chassis.pid_wait();
-  chassis.pid_drive_set(3_in, DRIVE_SPEED, true);
-  ladyBrownPID.target_set(200);
-  //elevator.move(0);
-  Lady_wait();
+  chassis.pid_drive_set(38_in, TURN_SPEED, true); //pick up third ring //possibly add slower speed when approaching rigns?
+  chassis.pid_wait_until(16_in);
+  chassis.pid_speed_max_set(DRIVE_SPEED-80);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
+  chassis.pid_wait();
   pros::delay(500);
-  chassis.pid_drive_set(-3_in, DRIVE_SPEED, true);
-}*/
+  chassis.pid_turn_set(205_deg, TURN_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-9_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(180_deg, TURN_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(13_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  pros::delay(500);
+  chassis.pid_turn_set(45_deg, TURN_SPEED, true);
+  chassis.pid_wait();
+  pros::delay(1000);
+  Load.suspend();
+  intakeGroup.move(0);
+  pros::delay(500);
+  pistonTog(); //Drop 1st goal
+  chassis.pid_drive_set(-9_in, DRIVE_SPEED, true); //back into corner
+  chassis.pid_wait();
+  pros::delay(500);
+  /*chassis.pid_drive_set(3_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-2_in, DRIVE_SPEED, true); //wiggle goal off
+  chassis.pid_wait();*/
+  elevator.move_relative(-100, 50);
+  chassis.pid_drive_set(9_in, DRIVE_SPEED, true); //exit corner
+  chassis.pid_wait();
+  chassis.pid_turn_set(180_deg, TURN_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-54_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  //Red left corner
+  pistonTog();
+  pros::delay(500);
+  chassis.pid_turn_set(90_deg, TURN_SPEED, true);
+  chassis.pid_wait();
+  Load.resume();
+  chassis.pid_drive_set(21_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(30_deg, TURN_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(25_in, DRIVE_SPEED, true); // pick up second ring
+  chassis.pid_wait();
+  chassis.pid_turn_set(270_deg, TURN_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(36_in, TURN_SPEED, true); //pick up third ring
+  chassis.pid_wait_until(16_in);
+  chassis.pid_speed_max_set(DRIVE_SPEED-80);  // After driving 6 inches at 30 speed, the robot will go the remaining distance at DRIVE_SPEED
+  chassis.pid_wait();
+  chassis.pid_wait();
+  pros::delay(500);
+  chassis.pid_turn_set(335_deg, TURN_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-9_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(0_deg, TURN_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(13_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  pros::delay(500);
+  chassis.pid_drive_set(-13_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(135_deg, TURN_SPEED, true);
+  chassis.pid_wait();
+  pros::delay(1000);
+  Load.suspend();
+  intakeGroup.move(0);
+  pros::delay(500);
+  pistonTog(); //Drop second goal
+  chassis.pid_drive_set(-13_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  pros::delay(500);
+  chassis.pid_drive_set(1_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-2_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  elevator.move_relative(-100, 50);
+  chassis.pid_drive_set(10_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+}
 void winPointRed(){
   chassis.drive_angle_set(270); //Tells IMU what its heading is
   //pros::Task HeadUpdate(headUpdate);

@@ -108,9 +108,17 @@ inline void load(){
             //master.print(0,0, "RPM: %d", elevatorRPM);
             elevator.move(-127); //Move in reverse
             intake.move(0);
+            /*
             pros::delay(1000);
             intakeGroup.move(127);
             pros::delay(500);
+            */
+            pros::delay(500);
+            elevatorRPM = elevator.get_actual_velocity(); //update value again
+            if(abs(elevatorRPM) < elevatorRPMFlag){
+                intakeGroup.move(127);
+                pros::delay(500);
+            }
         }
         else{
             intakeGroup.move(127);

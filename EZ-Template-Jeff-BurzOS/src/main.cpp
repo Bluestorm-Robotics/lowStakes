@@ -54,6 +54,7 @@ void initialize() {
       Auton("BlueRight\n Blue right corner", blueRight),
       Auton("BlueLeft", blueLeft),
       Auton("Skills Auton", skillsAuton),
+      Auton("NewSkills", newSkillsAuton),
       Auton("red_goalRush", winPointRed),
       Auton("blue_goalRush\n flipped red_goalrush", winPointBlue),
       //Auton("IMUScale Tuner", IMUScalingTuner),
@@ -65,10 +66,10 @@ void initialize() {
   // Initialize chassis and auton selector
   chassis.initialize();
   ez::as::initialize();
-  ladyBrown.tare_position();
-  lbRot_sensor.reset_position();
-  ladyBrownPID.exit_condition_set(80, 50, 300, 150, 500, 500);
-  ladyBrown.set_brake_mode(MOTOR_BRAKE_HOLD);
+  //ladyBrown.tare_position();
+  //lbRot_sensor.reset_position();
+  //ladyBrownPID.exit_condition_set(80, 50, 300, 150, 500, 500);
+  //ladyBrown.set_brake_mode(MOTOR_BRAKE_HOLD);
   master.rumble(chassis.drive_imu_calibrated() ? "." : "---");
   
 
@@ -185,7 +186,7 @@ void autonomous() {
   chassis.drive_imu_reset();                  // Reset gyro position to 0
   chassis.drive_sensor_reset();               // Reset drive sensors to 0
   chassis.drive_brake_set(MOTOR_BRAKE_HOLD);  // Set motors to hold.  This helps autonomous consistency
-  pistonTog();
+  // pistonTog();
   //pros::Task LadyBrown_task(ladyBrown_task);
 
   ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector

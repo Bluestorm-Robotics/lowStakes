@@ -9,6 +9,7 @@ void blueLeft();
 void redRight();
 void redLeft(); //actual auton test
 void skillsAuton();
+void newSkillsAuton();
 void IMUScalingTuner();
 void winPointRed();
 void winPointBlue();
