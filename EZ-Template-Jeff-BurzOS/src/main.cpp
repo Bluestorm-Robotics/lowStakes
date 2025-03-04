@@ -131,9 +131,9 @@ void ez_screen_task() {
             // Level 3 - Temp greater than 65 deg C or 149 deg F - 12.5% Power
             // Level 4 - Temp greater than 70 deg C or 158 deg F - 0% Power
         }
-        if(ez::as::page_blank_is_on(2)){
+        /*if(ez::as::page_blank_is_on(2)){
           ez::screen_print(std::to_string(lbRot_sensor.get_position()/100), 4);
-        }
+        }*/
       }
     }
 

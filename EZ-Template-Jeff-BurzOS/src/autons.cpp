@@ -696,19 +696,20 @@ void newSkillsAuton(){
   ladyPiston.set(true);
   chassis.pid_wait();
   pros::delay(1000);
-  Load.suspend();
-  intakeGroup.move(0);
-  chassis.pid_drive_set(4_in, DRIVE_SPEED, true); // pick up second ring
-  chassis.pid_wait();
   chassis.pid_turn_set(180_deg, TURN_SPEED, true);
   chassis.pid_wait();
+  chassis.pid_drive_set(5_in, DRIVE_SPEED, true); // pick up second ring
+  chassis.pid_wait();
+  Load.suspend();
+  intakeGroup.move(-15);
   ladyBrown.move(127);
-  pros::delay(800);
-  chassis.pid_drive_set(-7_in, DRIVE_SPEED, true);
+  pros::delay(900);
+  chassis.pid_drive_set(-1_in, DRIVE_SPEED, true);
   ladyPiston.set(false);
   ladyBrown.move(-127);
   chassis.pid_wait();
   ladyBrown.move(0);
+  intakeGroup.move(127);
   Load.resume();
   chassis.pid_turn_set(270_deg, TURN_SPEED, true);
   chassis.pid_wait();
