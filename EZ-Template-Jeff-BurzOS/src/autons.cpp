@@ -62,7 +62,7 @@ void default_constants() {
   //chassis.drive_imu_scaler_set(.9139 );
   //chassis.drive_imu_scaler_set(1.001); //retune for dif robot weightA
   //chassis.drive_imu_scaler_set(1.020); //increase if overshoots (wack)
-  chassis.drive_imu_scaler_set(1.0115);
+  chassis.drive_imu_scaler_set(1.011);
 }
 
 void measure_offsets() {
@@ -681,14 +681,14 @@ void newSkillsAuton(){
   chassis.pid_drive_set(-20_in, DRIVE_SPEED, true);
   chassis.pid_wait();
   pistonTog(); // grab right stake
-  pros::delay(500);
+  pros::delay(300);
   chassis.pid_drive_set(3_in, DRIVE_SPEED, true); // line up with grid
   chassis.pid_wait();
   chassis.pid_turn_set(90_deg, TURN_SPEED, true); // turn 
   chassis.pid_wait();
   chassis.pid_drive_set(21_in, DRIVE_SPEED, true); // pick up first ring
   chassis.pid_wait();
-  pros::delay(500);
+  pros::delay(200);
   chassis.pid_turn_set(150_deg, TURN_SPEED, true);
   chassis.pid_wait();
   chassis.pid_drive_set(28_in, DRIVE_SPEED, true); // pick up second ring
@@ -701,15 +701,19 @@ void newSkillsAuton(){
   chassis.pid_drive_set(5_in, DRIVE_SPEED, true); // pick up second ring
   chassis.pid_wait();
   Load.suspend();
-  intakeGroup.move(-15);
+  pros::delay(50);
+  elevator.move(-1);
   ladyBrown.move(127);
-  pros::delay(900);
-  chassis.pid_drive_set(-1_in, DRIVE_SPEED, true);
+  pros::delay(50);
+  elevator.move(0);
+  pros::delay(600);
+  ladyBrown.move(0);
+  chassis.pid_drive_set(-12_in, DRIVE_SPEED, true);
   ladyPiston.set(false);
   ladyBrown.move(-127);
   chassis.pid_wait();
-  ladyBrown.move(0);
   intakeGroup.move(127);
+  pros::delay(100);
   Load.resume();
   chassis.pid_turn_set(270_deg, TURN_SPEED, true);
   chassis.pid_wait();
@@ -754,6 +758,8 @@ void newSkillsAuton(){
   pros::delay(500);
   chassis.pid_turn_set(90_deg, TURN_SPEED, true);
   chassis.pid_wait();
+  intakeGroup.move(127);
+  pros::delay(100);
   Load.resume();
   chassis.pid_drive_set(21_in, DRIVE_SPEED, true);
   chassis.pid_wait();

@@ -57,7 +57,7 @@ void initialize() {
       Auton("NewSkills", newSkillsAuton),
       Auton("red_goalRush", winPointRed),
       Auton("blue_goalRush\n flipped red_goalrush", winPointBlue),
-      //Auton("IMUScale Tuner", IMUScalingTuner),
+       Auton("IMUScale Tuner", IMUScalingTuner),
       //Auton("drive_example", drive_example),
       //Auton("turn_example", turn_example),
       //Auton("PID Tuner", measure_offsets),
