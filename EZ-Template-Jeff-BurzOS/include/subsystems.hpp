@@ -11,9 +11,9 @@
 
 // RJ45 Ports
 #define elevator_Motor 4
-#define elevator_Motor2 13
-#define loader_Motor -14
-#define loader_Motor2 -15
+#define elevator_Motor2 14
+#define loader_Motor 0
+#define loader_Motor2 15
 #define ladyBrown_PORT 16
 
 //Sensors
