@@ -14,7 +14,7 @@
 #define elevator_Motor2 14
 #define loader_Motor 0
 #define loader_Motor2 15
-#define ladyBrown_PORT 16
+#define ladyBrown_PORT -16
 
 //Sensors
 #define GPS_PORT 18 //Currently Not installed

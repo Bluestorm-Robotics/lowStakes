@@ -62,7 +62,7 @@ void default_constants() {
   //chassis.drive_imu_scaler_set(.9139 );
   //chassis.drive_imu_scaler_set(1.001); //retune for dif robot weightA
   //chassis.drive_imu_scaler_set(1.020); //increase if overshoots (wack)
-  chassis.drive_imu_scaler_set(1.011);
+  chassis.drive_imu_scaler_set(1.0116);
 }
 
 void measure_offsets() {
@@ -371,44 +371,47 @@ void interfered_example() {
 
 
 void redLeft(){
-  chassis.drive_angle_set(283); //Tells IMU what its heading is
+  chassis.drive_angle_set(288); //Tells IMU what its heading is //was 283
   //pros::Task HeadUpdate(headUpdate);
   //int curHead;
   //pistonTog();
   //gps1.initialize_full(X_OFFSET, Y_OFFSET, X_INITIAL, Y_INITIAL, HEADING_INITIAL);
-  chassis.pid_drive_set(-29_in, DRIVE_SPEED-20, true);
-  chassis.pid_wait_quick();
-  pros::delay(100);
-  pistonTog(); //pickup mogo
+  chassis.pid_drive_set(-29_in, DRIVE_SPEED, true); //was 29
+  chassis.pid_wait_until(-26_in);
+  pistonTog();
+  chassis.pid_wait();
+  //pros::delay(100);
+  chassis.pid_drive_set(3_in, DRIVE_SPEED, true); //was 29
+  chassis.pid_wait();
   //deployMolly();
-  chassis.pid_turn_set(30_deg, TURN_SPEED);
+  chassis.pid_turn_set(40_deg, TURN_SPEED);
   chassis.pid_wait(); 
   pros::Task Load(load); //load 1st ring
   //Load.resume();
   //pros::Task Eject(eject);
-  chassis.pid_drive_set(12_in, DRIVE_SPEED, true); //lload 2nd ring
-  chassis.pid_wait_quick();
+  chassis.pid_drive_set(9_in, DRIVE_SPEED, true); //lload 2nd ring  //was 12
+  chassis.pid_wait();
   pros::delay(800);
-  chassis.pid_drive_set(-12_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_turn_set(335_deg, TURN_SPEED);
-  chassis.pid_wait_quick();
+  chassis.pid_drive_set(-9_in, DRIVE_SPEED, true); //was 12
+  chassis.pid_wait();
+  chassis.pid_turn_set(0_deg, TURN_SPEED);
+  chassis.pid_wait();
   chassis.pid_drive_set(14_in, DRIVE_SPEED, true); //load 3rd ring
-  chassis.pid_wait_quick();
+  chassis.pid_wait();
   pros::delay(800);
-  chassis.pid_turn_set(40_deg, TURN_SPEED);
-  chassis.pid_wait_quick();
-  chassis.pid_drive_set(11_in, DRIVE_SPEED, true); //load 4th ring
-  chassis.pid_wait_quick();
+  chassis.pid_turn_set(90_deg, TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(5.7_in, DRIVE_SPEED, true); //load 4th ring
+  chassis.pid_wait();
   pros::delay(800);
-  chassis.pid_drive_set(-13_in, DRIVE_SPEED, true);
-  chassis.pid_wait_quick();
-  chassis.pid_turn_set(335_deg, TURN_SPEED);
-  chassis.pid_wait_quick();
+  chassis.pid_drive_set(-5.7_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(0_deg, TURN_SPEED);
+  chassis.pid_wait();
   Load.suspend();
   intakeGroup.move(0);
-  chassis.pid_drive_set(-20_in, 127, true);
-  chassis.pid_wait_quick();
+  chassis.pid_drive_set(-24_in, 127, true);
+  chassis.pid_wait();
   /*chassis.pid_turn_set(null_deg, TURN_SPEED);
   chassis,pid_wait();
   chassis.pid_drive_set(null_in, DRIVE_SPEED, true);
@@ -453,6 +456,60 @@ void redRight(){
 }
 
 void blueRight(){
+  chassis.drive_angle_set(108); //Tells IMU what its heading is //was 283
+  //pros::Task HeadUpdate(headUpdate);
+  //int curHead;
+  //pistonTog();
+  //gps1.initialize_full(X_OFFSET, Y_OFFSET, X_INITIAL, Y_INITIAL, HEADING_INITIAL);
+  chassis.pid_drive_set(-29_in, DRIVE_SPEED, true); //was 29
+  chassis.pid_wait_until(-26_in);
+  pistonTog();
+  chassis.pid_wait();
+  //pros::delay(100);
+  chassis.pid_drive_set(3_in, DRIVE_SPEED, true); //was 29
+  chassis.pid_wait();
+  //deployMolly();
+  chassis.pid_turn_set(40_deg, TURN_SPEED);
+  chassis.pid_wait(); 
+  pros::Task Load(load); //load 1st ring
+  //Load.resume();
+  //pros::Task Eject(eject);
+  chassis.pid_drive_set(9_in, DRIVE_SPEED, true); //lload 2nd ring  //was 12
+  chassis.pid_wait();
+  pros::delay(800);
+  chassis.pid_drive_set(-9_in, DRIVE_SPEED, true); //was 12
+  chassis.pid_wait();
+  chassis.pid_drive_set(-24_in, DRIVE_SPEED, true); //was 12
+  chassis.pid_wait_until(-23_in);
+  Load.remove();
+  intakeGroup.move(0);
+  chassis.pid_wait();
+  /*
+  chassis.pid_turn_set(0_deg, TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(14_in, DRIVE_SPEED, true); //load 3rd ring
+  chassis.pid_wait();
+  pros::delay(800);
+  chassis.pid_turn_set(180_deg, TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(5.7_in, DRIVE_SPEED, true); //load 4th ring
+  chassis.pid_wait();
+  pros::delay(800);
+  chassis.pid_drive_set(-5.7_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(0_deg, TURN_SPEED);
+  chassis.pid_wait();
+  Load.suspend();
+  intakeGroup.move(0);
+  chassis.pid_drive_set(-24_in, 127, true);
+  chassis.pid_wait();
+  /*chassis.pid_turn_set(null_deg, TURN_SPEED);
+  chassis,pid_wait();
+  chassis.pid_drive_set(null_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+
+  */
+  /*
   chassis.drive_angle_set(60); //Tells IMU what its heading is
   //pros::Task HeadUpdate(headUpdate);
   //int curHead;
@@ -669,12 +726,11 @@ void skillsAuton(){
 
 void newSkillsAuton(){
   ez::Piston ladyPiston('D', false);
-  //Red right corner
+  //Red right corner 
   chassis.drive_angle_set(90); //Tells IMU what its heading is
   pros::Task Load(load);
-  //Load.resume();
   pros::delay(1000);
-  chassis.pid_drive_set(11_in, DRIVE_SPEED, true); // line up with grid
+  chassis.pid_drive_set(7_in, DRIVE_SPEED, true); // line up with grid
   chassis.pid_wait();
   chassis.pid_turn_set(0_deg, TURN_SPEED, true);  // turn with back to right stake
   chassis.pid_wait();
@@ -686,19 +742,19 @@ void newSkillsAuton(){
   chassis.pid_wait();
   chassis.pid_turn_set(90_deg, TURN_SPEED, true); // turn 
   chassis.pid_wait();
-  chassis.pid_drive_set(21_in, DRIVE_SPEED, true); // pick up first ring
+  chassis.pid_drive_set(15_in, DRIVE_SPEED, true); // pick up first ring
   chassis.pid_wait();
   pros::delay(200);
   chassis.pid_turn_set(150_deg, TURN_SPEED, true);
   chassis.pid_wait();
-  chassis.pid_drive_set(28_in, DRIVE_SPEED, true); // pick up second ring
+  chassis.pid_drive_set(24_in, DRIVE_SPEED, true); // pick up second ring
   chassis.pid_wait_until(20_in);
   ladyPiston.set(true);
   chassis.pid_wait();
   pros::delay(1000);
   chassis.pid_turn_set(180_deg, TURN_SPEED, true);
   chassis.pid_wait();
-  chassis.pid_drive_set(5_in, DRIVE_SPEED, true); // pick up second ring
+  chassis.pid_drive_set(2_in, DRIVE_SPEED, true); // pick up second ring
   chassis.pid_wait();
   Load.suspend();
   pros::delay(50);
@@ -852,6 +908,7 @@ void winPointRed(){
 void winPointBlue(){
   chassis.odom_theta_flip();
   chassis.odom_x_flip();
+  chassis.odom_y_flip();
   winPointRed();
 }
 
@@ -907,4 +964,8 @@ void blueRightTwo(){
   chassis.pid_wait();
 
   */
+}
+
+void loaderTest(){
+  pros::Task Load(load);
 }

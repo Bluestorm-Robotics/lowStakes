@@ -23,3 +23,4 @@ void combining_movements();
 void interfered_example();
 void measure_offsets();
 void default_constants();
+void loaderTest();

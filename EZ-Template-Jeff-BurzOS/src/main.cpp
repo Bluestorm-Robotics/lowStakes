@@ -49,15 +49,16 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      Auton("redRight\n Red right corner single side", redRight),
+      Auton("redRight\n Red right corner single side\n \n \n \n \n 1723A", redRight),
       Auton("redLeft\n Red left corner single side", redLeft),
       Auton("BlueRight\n Blue right corner", blueRight),
       Auton("BlueLeft", blueLeft),
-      Auton("Skills Auton", skillsAuton),
-      Auton("NewSkills", newSkillsAuton),
+      Auton("Skills Auton\n Does not use sidestakes", skillsAuton),
+      Auton("NewSkills\n Uses sidestakes", newSkillsAuton),
       Auton("red_goalRush", winPointRed),
-      Auton("blue_goalRush\n flipped red_goalrush", winPointBlue),
-       Auton("IMUScale Tuner", IMUScalingTuner),
+      Auton("blue_goalRush\n flipped red_goalrush\n UNTESTED", winPointBlue),
+      Auton("IMUScale Tuner\n Turns 360 10 times", IMUScalingTuner),
+      Auton("Loadertest\n Tests anti-jamming loader task", loaderTest)
       //Auton("drive_example", drive_example),
       //Auton("turn_example", turn_example),
       //Auton("PID Tuner", measure_offsets),
@@ -135,6 +136,9 @@ void ez_screen_task() {
           ez::screen_print(std::to_string(lbRot_sensor.get_position()/100), 4);
         }*/
       }
+      if(ez::as::page_blank_is_on(2)){
+        ez::screen_print(std::to_string(elevator.get_actual_velocity()), 1);
+      }
     }
 
     // Remove all blank pages when connected to a comp switch
@@ -168,6 +172,7 @@ void disabled() {
  */
 void competition_initialize() {
   // . . .
+  
 }
 
 /**
@@ -186,9 +191,12 @@ void autonomous() {
   chassis.drive_imu_reset();                  // Reset gyro position to 0
   chassis.drive_sensor_reset();               // Reset drive sensors to 0
   chassis.drive_brake_set(MOTOR_BRAKE_HOLD);  // Set motors to hold.  This helps autonomous consistency
-  // pistonTog();
-  //pros::Task LadyBrown_task(ladyBrown_task);
-
+  /*ez::as::shutdown();
+  LV_IMG_DECLARE(Image);
+  image = lv_img_create(lv_scr_act());
+  lv_img_set_src(image, &Image);
+  lv_obj_set_size(image, 480, 272);
+  lv_obj_align(image, LV_ALIGN_CENTER, 0, 0);*/
   ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
 /**
@@ -212,11 +220,6 @@ void opcontrol() {
   chassis.drive_brake_set(driver_preference_brake);
   chassis.opcontrol_drive_activebrake_set(1.0);
   //pros::Task LadyBrown_task(ladyBrown_task);
-  /*LV_IMG_DECLARE(Image);
-  image = lv_img_create(lv_scr_act());
-  lv_img_set_src(image, &Image);
-  lv_obj_set_size(image, 480, 272);
-  lv_obj_align(image, LV_ALIGN_CENTER, 0, 0);*/
 
   while (true) {
     // PID Tuner

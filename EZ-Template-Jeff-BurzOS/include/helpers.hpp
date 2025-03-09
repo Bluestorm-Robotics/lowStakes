@@ -4,10 +4,10 @@
 
 
 //Constants
-inline const int DRIVE_SPEED = 127; //was 110
-inline const int TURN_SPEED = 115;
+inline const int DRIVE_SPEED = 100; //was 110
+inline const int TURN_SPEED = 80;
 inline const int SWING_SPEED = 40;
-inline const int elevatorRPMFlag = 10; //Threashold for detecting elevator jam //was 100 //was 50
+inline const int elevatorRPMFlag = 30; //Threashold for detecting elevator jam //was 100 //was 50
 //inline const int blue = 200;
 //inline const int red = 30;
 
@@ -16,7 +16,7 @@ inline const int elevatorRPMFlag = 10; //Threashold for detecting elevator jam /
 inline int pistonCount = 0; // Counts piston uses
 inline bool pistonStat = false; //Tracks if piston is enabled
 inline bool ejecterStat = false;
-inline int elevatorRPM;
+//inline int elevatorRPM;
 inline bool intakeTog = false;
 inline bool mollyBStat = false; 
 inline bool isJammed = false; //flag for if elevator is jammed (prevents ejecter)
@@ -102,8 +102,8 @@ inline void load(){
     intakeGroup.move(127);
     pros::delay(1000);
     while(true){
-        elevatorRPM = elevator.get_actual_velocity();
-        if(elevatorRPM < elevatorRPMFlag){  
+        //elevatorRPM = elevator.get_actual_velocity();
+        if(elevator.get_actual_velocity() < elevatorRPMFlag){  
             isJammed = true;
             //master.print(0,0, "RPM: %d", elevatorRPM);
             elevator.move(-127); //Move in reverse
@@ -114,8 +114,13 @@ inline void load(){
             pros::delay(500);
             */
             pros::delay(500);
-            elevatorRPM = elevator.get_actual_velocity(); //update value again
-            if(abs(elevatorRPM) < elevatorRPMFlag){
+            //elevatorRPM = elevator.get_actual_velocity(); //update value again
+            if(abs(elevator.get_actual_velocity()) > elevatorRPMFlag){
+                intakeGroup.move(127);
+                pros::delay(500);
+            }
+            else{
+                pros::delay(1000);
                 intakeGroup.move(127);
                 pros::delay(500);
             }
